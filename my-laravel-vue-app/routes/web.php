@@ -41,4 +41,6 @@ Route::middleware('auth')->group(function () {
     
 });
 
+Route::post('/login', [AuthenticatedSessionController::class, 'store'])->name('login');
+
 require __DIR__.'/auth.php';
