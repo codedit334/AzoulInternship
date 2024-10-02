@@ -9,7 +9,28 @@ class StudentController extends Controller
 {
     public function index()
     {
-        return User::where('role', 'student')->get();
+        {
+            // Get the currently authenticated student
+            $student = auth()->user();
+    
+            // Get the teacher assigned to this student
+            $teacher = User::find($student->teacher_id);
+    
+            // Get students with the same teacher (excluding the current student)
+            $similarStudents = User::where('teacher_id', $student->teacher_id)
+                                    ->where('id', '!=', $student->id) // Exclude the current student
+                                    ->get();
+    
+            // Get all students
+            $allStudents = User::where('role', 'student')->get();
+    
+            // Return Inertia response with the data
+            return Inertia::render('Students/Index', [
+                'teacher' => $teacher,
+                'similarStudents' => $similarStudents,
+                'allStudents' => $allStudents,
+            ]);
+        }
     }
 
     public function store(Request $request)

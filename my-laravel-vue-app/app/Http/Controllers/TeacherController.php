@@ -39,33 +39,6 @@ class TeacherController extends Controller
         'assignedStudents' => $assignedStudents,
         'unassignedStudents' => $unassignedStudents,
     ]);
-}
-     // Show the form to create a new student
-     public function create()
-     {
-         return Inertia::render('Teachers/CreateStudent');
-     }
- 
-     // Store a new student in the database
-     public function store(Request $request)
-     {
-         // Validate the incoming request data
-        //  $request->validate([
-        //      'name' => 'required|string|max:255',
-        //      'email' => 'required|string|email|max:255|unique:users',
-        //      'teacher_id' => 'required|exists:users,id', // Ensure the teacher exists
-        //  ]);
- 
-        //  // Create a new student
-        //  User::create($request->all());
-
-
-         // Validate the request
-    // $validatedData = $request->validate([
-    //     'name' => 'required|string|max:255',
-    //     'email' => 'required|string|email|max:255|unique:users',
-    //     'teacher_id' => 'required|exists:users,id', // Ensure the teacher exists
-    // ]);
 
     // create test object
     $validatedData = [
@@ -95,12 +68,6 @@ class TeacherController extends Controller
      // Assign an unassigned student to the current teacher
      public function assignStudent(Request $request, $id)
 {
-
-    // Validate the request
-    // $request->validate([
-    //     'teacher_id' => 'required|exists:users,id', // Ensure the teacher exists
-    // ]);
-
      // Get the currently authenticated teacher
      $teacher = auth()->user(); // Get the authenticated user
 

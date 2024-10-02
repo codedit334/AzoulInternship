@@ -24,8 +24,6 @@
     </ul>
     <p v-else>No unassigned students.</p>
 
-    <!-- Button to create a new student -->
-    <button @click="goToCreateStudent">Add Student</button>
   </div>
 </template>
 
