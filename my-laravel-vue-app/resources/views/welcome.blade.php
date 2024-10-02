@@ -393,6 +393,7 @@
 
 <body class="antialiased">
     <div id="app">
+        <login></login>
         <example-component></example-component>
     </div>
     <div
