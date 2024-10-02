@@ -48,7 +48,7 @@ class TeacherController extends Controller
          ]);
  
          // Create a new student
-         Student::create($request->all());
+         User::create($request->all());
  
          // Redirect back to the student's list with a success message
          return redirect()->route('teachers.my_students')->with('success', 'Student created successfully!');
