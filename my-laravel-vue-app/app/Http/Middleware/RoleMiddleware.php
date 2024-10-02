@@ -16,6 +16,10 @@ class RoleMiddleware
      */
     public function handle(Request $request, Closure $next)
     {
+        if (!in_array(auth()->user()->role, $roles)) {
+            return redirect('/'); // Redirect or show an unauthorized message
+        }
+    
         return $next($request);
     }
 }
