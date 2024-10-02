@@ -5,7 +5,7 @@
  */
 
 import './bootstrap';
-import { createApp } from 'vue';
+import { createApp, h } from 'vue'
 import { createInertiaApp } from '@inertiajs/vue3'; // Use @inertiajs/inertia-vue for Vue 2
 import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers';
 
