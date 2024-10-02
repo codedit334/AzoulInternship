@@ -47,6 +47,10 @@ Route::middleware('auth')->group(function () {
     Route::middleware(['role:student'])->group(function () {
         Route::get('/dashboard/student', [StudentController::class, 'index'])->name('student.dashboard');
     });
+
+    Route::middleware(['role:admin'])->group(function () {
+        Route::get('/dashboard/admin', [AdminController::class, 'index'])->name('admin.dashboard');
+    });
     
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
