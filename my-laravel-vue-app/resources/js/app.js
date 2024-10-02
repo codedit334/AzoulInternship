@@ -8,6 +8,9 @@ import { ZiggyVue } from '../../vendor/tightenco/ziggy/dist/vue.m';
 
 import StudentList from './components/StudentList.vue';
 import TeacherList from './components/TeacherList.vue';
+import App from './components/App.vue';
+
+const app = createApp(App);
 
 const appName = window.document.getElementsByTagName('title')[0]?.innerText || 'Laravel';
 
