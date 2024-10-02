@@ -28,8 +28,11 @@ class TeacherController extends Controller
 
     // Fetch students NOT assigned to this teacher
     $unassignedStudents = User::where('role', 'student') // Assuming 'role' column distinguishes roles
-                            ->where('teacher_id', '!=', $teacher->id) // Exclude students with this teacher_id
-                            ->get();
+                                ->where(function ($query) use ($teacher) {
+                                    $query->where('teacher_id', '!=', $teacher->id)
+                                          ->orWhereNull('teacher_id'); // Include students with null teacher_id
+                                })
+                                ->get();
                             
     // Return Inertia response with the data
     return Inertia::render('Teachers/MyStudents', [
