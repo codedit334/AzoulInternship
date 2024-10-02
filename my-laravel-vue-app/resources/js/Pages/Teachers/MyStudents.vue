@@ -7,6 +7,7 @@
     <ul v-if="assignedStudents.length">
       <li v-for="student in assignedStudents" :key="student.id">
         {{ student.name }} ({{ student.email }})
+        <button @click="unassignStudent(student.id)">Unassign</button>
         <button @click="deleteStudent(student.id)">Delete</button>
       </li>
     </ul>
@@ -18,6 +19,7 @@
       <li v-for="student in unassignedStudents" :key="student.id">
         {{ student.name }} ({{ student.email }})
         <button @click="assignStudent(student.id)">Assign to Me</button>
+        <button @click="deleteStudent(student.id)">Delete</button>
       </li>
     </ul>
     <p v-else>No unassigned students.</p>
@@ -47,6 +49,12 @@ export default {
     assignStudent(id) {
       if (confirm("Do you want to assign this student to yourself?")) {
         Inertia.post(`/teachers/assign-student/${id}`);
+      }
+    },
+    // Method to unassign a student from the current teacher
+    unassignStudent(id) {
+      if (confirm("Do you want to unassign this student?")) {
+        Inertia.post(`/teachers/unassign-student/${id}`);
       }
     },
     // Navigate to the create student page
