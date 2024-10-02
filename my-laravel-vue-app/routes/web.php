@@ -43,6 +43,10 @@ Route::middleware('auth')->group(function () {
         Route::post('/students', [TeacherController::class, 'store'])->name('students.store'); // Add student
         Route::delete('/students/{id}', [TeacherController::class, 'destroy'])->name('students.destroy'); // Delete student
     });
+
+    Route::middleware(['role:student'])->group(function () {
+        Route::get('/dashboard/student', [StudentController::class, 'index'])->name('student.dashboard');
+    });
     
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
