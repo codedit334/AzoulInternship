@@ -56,7 +56,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/students/similar', [StudentController::class, 'similarStudents'])->name('students.similar_students');
 
     // Admin routes
-    Route::middleware(['auth', 'admin'])->group(function () {
+    // Route::middleware(['auth', 'admin'])->group(function () {
         // Admin routes
         Route::get('/admin', [AdminController::class, 'index'])->name('admin.index');
         Route::delete('/admin/users/{id}', [AdminController::class, 'destroy'])->name('admin.destroy_user');
@@ -67,7 +67,7 @@ Route::middleware(['auth'])->group(function () {
     
         Route::get('/admin/create-student', [AdminController::class, 'createStudent'])->name('admin.create_student');
         Route::post('/admin/store-student', [AdminController::class, 'storeStudent'])->name('admin.store_student');
-    });
+    // });
 });
 Route::post('/login', [AuthenticatedSessionController::class, 'store'])->name('login');
 
