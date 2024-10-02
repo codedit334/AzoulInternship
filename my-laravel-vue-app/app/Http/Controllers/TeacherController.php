@@ -91,7 +91,23 @@ class TeacherController extends Controller
          // Redirect back to the student's list with a success message
         //  return redirect()->route('teachers.my_students')->with('success', 'Student created successfully!');
      }
- 
+     
+     // Assign an unassigned student to the current teacher
+     public function assignStudent(Request $request, $id)
+{
+    // Validate the request
+    $request->validate([
+        'teacher_id' => 'required|exists:users,id', // Ensure the teacher exists
+    ]);
+
+    // Find the student and assign the teacher
+    $student = User::findOrFail($id);
+    $student->teacher_id = $request->teacher_id;
+    $student->save();
+
+    return response()->json(['message' => 'Student assigned successfully!']);
+}
+
      // Unassign a student from the current teacher
      public function unassignStudent($id)
 {
