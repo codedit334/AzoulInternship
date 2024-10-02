@@ -5,6 +5,10 @@ use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
+
+use App\Http\Controllers\AdminController;
+use App\Http\Controllers\TeacherController;
+use App\Http\Controllers\StudentController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
