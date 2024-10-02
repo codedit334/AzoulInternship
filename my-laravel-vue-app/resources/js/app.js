@@ -12,6 +12,11 @@ import App from './components/App.vue';
 
 const app = createApp(App);
 
+app.component('student-list', StudentList); // Register StudentList component
+app.component('teacher-list', TeacherList); // Register TeacherList component
+
+app.mount('#app');
+
 const appName = window.document.getElementsByTagName('title')[0]?.innerText || 'Laravel';
 
 createInertiaApp({
