@@ -42,6 +42,8 @@ Route::get('/dashboard', function () {
 
 Route::middleware(['auth'])->group(function () {
     // Teacher routes
+ Route::middleware(['auth', 'role:teacher'])->group(function () {
+
     Route::get('/teachers', [TeacherController::class, 'index'])->name('teachers.index');
     Route::get('/teachers/my-students', [TeacherController::class, 'myStudents'])->name('teachers.my_students');
     Route::get('/teachers/create-student', [TeacherController::class, 'create'])->name('teachers.create_student');
@@ -49,14 +51,17 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/teachers/assign-student/{id}', [TeacherController::class, 'assignStudent'])->name('teachers.assign_student');
     Route::post('/teachers/unassign-student/{id}', [TeacherController::class, 'unassignStudent'])->name('teachers.unassign_student');
     Route::delete('/teachers/students/{id}', [TeacherController::class, 'destroy'])->name('teachers.destroy_student');
-
+ });
+ 
     // Student routes
+ Route::middleware(['auth', 'role:student'])->group(function () {
     Route::get('/students', [StudentController::class, 'index'])->name('students.index');
     Route::get('/students/my-teacher', [StudentController::class, 'myTeacher'])->name('students.my_teacher');
     Route::get('/students/similar', [StudentController::class, 'similarStudents'])->name('students.similar_students');
-
+  });
+  
     // Admin routes
-    // Route::middleware(['auth', 'admin'])->group(function () {
+    Route::middleware(['auth', 'role:admin'])->group(function () {
         // Admin routes
         Route::get('/admin', [AdminController::class, 'index'])->name('admin.index');
         Route::delete('/admin/users/{id}', [AdminController::class, 'destroy'])->name('admin.destroy_user');
@@ -67,7 +72,7 @@ Route::middleware(['auth'])->group(function () {
     
         Route::get('/admin/create-student', [AdminController::class, 'createStudent'])->name('admin.create_student');
         Route::post('/admin/store-student', [AdminController::class, 'storeStudent'])->name('admin.store_student');
-    // });
+    });
 });
 Route::post('/login', [AuthenticatedSessionController::class, 'store'])->name('login');
 
