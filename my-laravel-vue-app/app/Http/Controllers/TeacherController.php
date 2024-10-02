@@ -95,17 +95,21 @@ class TeacherController extends Controller
      // Assign an unassigned student to the current teacher
      public function assignStudent(Request $request, $id)
 {
+
     // Validate the request
-    $request->validate([
-        'teacher_id' => 'required|exists:users,id', // Ensure the teacher exists
-    ]);
+    // $request->validate([
+    //     'teacher_id' => 'required|exists:users,id', // Ensure the teacher exists
+    // ]);
+
+     // Get the currently authenticated teacher
+     $teacher = auth()->user(); // Get the authenticated user
 
     // Find the student and assign the teacher
     $student = User::findOrFail($id);
-    $student->teacher_id = $request->teacher_id;
+    $student->teacher_id = $teacher->id;
     $student->save();
 
-    return response()->json(['message' => 'Student assigned successfully!']);
+    return redirect()->back()->with('success', 'Student assigned successfully.');
 }
 
      // Unassign a student from the current teacher
