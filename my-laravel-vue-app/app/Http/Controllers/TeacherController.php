@@ -31,52 +31,37 @@ class TeacherController extends Controller
         'students' => $students,
     ]);
 }
-    
-    // Store a new teacher
-    // public function store(Request $request)
-    // {
-    //     $validated = $request->validate([
-    //         'name' => 'required|string|max:255',
-    //         'email' => 'required|string|email|max:255|unique:users',
-    //         'password' => 'required|string|min:8',
-    //     ]);
-
-    //     $validated['password'] = Hash::make($validated['password']);
-    //     $validated['role'] = 'teacher';
-
-    //     return User::create($validated);
-    // }
-
-    // // Show a specific teacher
-    // public function show($id)
-    // {
-    //     return User::findOrFail($id);
-    // }
-
-    // // Update a teacher's information
-    // public function update(Request $request, $id)
-    // {
-    //     $user = User::findOrFail($id);
-        
-    //     $validated = $request->validate([
-    //         'name' => 'sometimes|string|max:255',
-    //         'email' => 'sometimes|string|email|max:255|unique:users,email,' . $user->id,
-    //         'password' => 'sometimes|string|min:8',
-    //     ]);
-
-    //     if ($request->has('password')) {
-    //         $validated['password'] = Hash::make($validated['password']);
-    //     }
-
-    //     $user->update($validated);
-    //     return response()->json(['message' => 'Teacher updated successfully!', 'teacher' => $user]);
-    // }
-
-    // // Delete a teacher
-    // public function destroy($id)
-    // {
-    //     $user = User::findOrFail($id);
-    //     $user->delete();
-    //     return response()->json(['message' => 'Teacher deleted successfully!']);
-    // }
+     // Show the form to create a new student
+     public function create()
+     {
+         return Inertia::render('Teachers/CreateStudent');
+     }
+ 
+     // Store a new student in the database
+     public function store(Request $request)
+     {
+         // Validate the incoming request data
+         $request->validate([
+             'name' => 'required|string|max:255',
+             'email' => 'required|string|email|max:255|unique:students',
+             'teacher_id' => 'required|exists:users,id', // Ensure the teacher exists
+         ]);
+ 
+         // Create a new student
+         Student::create($request->all());
+ 
+         // Redirect back to the student's list with a success message
+         return redirect()->route('teachers.my_students')->with('success', 'Student created successfully!');
+     }
+ 
+     // Delete a student
+     public function destroy($id)
+     {
+         // Find the student by ID
+         $student = Student::findOrFail($id);
+         $student->delete();
+ 
+         // Return a JSON response
+         return response()->json(['message' => 'Student deleted successfully!']);
+     }
 }
