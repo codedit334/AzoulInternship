@@ -19,20 +19,18 @@ class TeacherController extends Controller
     }
 
     public function myStudents()
-    {
-        // Get the currently authenticated teacher
-        $teacher = auth()->user();
+{
+    // Get the currently authenticated teacher
+    $teacher = auth()->user();
 
-        // Fetch students assigned to this teacher
-        $students = User::where('teacher_id', $teacher->id) // Assuming there's a teacher_id in users table
-        ->where('role', 'student') // Filter by role
-        ->get();
-        
-        // Return Inertia response with the data
-        return Inertia::render('Teachers/MyStudents', [
-            'students' => $students,
-        ]);
-    }
+    // Fetch students assigned to this teacher
+    $students = $teacher->students; // Using the relationship
+
+    // Return Inertia response with the data
+    return Inertia::render('Teachers/MyStudents', [
+        'students' => $students,
+    ]);
+}
     
     // Store a new teacher
     // public function store(Request $request)
