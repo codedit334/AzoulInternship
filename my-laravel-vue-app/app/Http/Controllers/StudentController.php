@@ -7,28 +7,50 @@ use Illuminate\Http\Request;
 
 class StudentController extends Controller
 {
-    // Show all students
     public function index()
     {
-        $students = User::where('role', 'student')->get();
-        return view('students.index', compact('students'));
+        return User::where('role', 'student')->get();
     }
 
-    // Show assigned teacher
-    public function myTeacher()
+    public function store(Request $request)
     {
-        $student = auth()->user(); // Get the authenticated student
-        $teacher = User::find($student->teacher_id); // Get the student's teacher
-        return view('students.my_teacher', compact('teacher'));
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255|unique:users',
+            'password' => 'required|string|min:8',
+        ]);
+
+        $validated['password'] = bcrypt($validated['password']);
+        $validated['role'] = 'student';
+
+        return User::create($validated);
     }
 
-    // Show similar students (students with the same teacher)
-    public function similarStudents()
+    public function show($id)
     {
-        $student = auth()->user();
-        $students = User::where('teacher_id', $student->teacher_id)
-                        ->where('id', '!=', $student->id) // Exclude the current student
-                        ->get();
-        return view('students.similar_students', compact('students'));
+        return User::findOrFail($id);
+    }
+
+    public function update(Request $request, $id)
+    {
+        $user = User::findOrFail($id);
+        $validated = $request->validate([
+            'name' => 'string|max:255',
+            'email' => 'string|email|max:255|unique:users,email,' . $user->id,
+        ]);
+
+        if ($request->has('password')) {
+            $validated['password'] = bcrypt($request->password);
+        }
+
+        $user->update($validated);
+        return $user;
+    }
+
+    public function destroy($id)
+    {
+        $user = User::findOrFail($id);
+        $user->delete();
+        return response()->noContent();
     }
 }

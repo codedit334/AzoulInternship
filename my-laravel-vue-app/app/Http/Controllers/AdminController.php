@@ -5,53 +5,59 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Http\Request;
 
-class AdminController extends Controller
+class TeacherController extends Controller
 {
-    // Show all users
+    // Get all teachers
     public function index()
     {
-        $users = User::all();
-        return view('admin.index', compact('users'));
+        return User::where('role', 'teacher')->get();
     }
 
-    // Show specific user (teacher or student)
-    public function show($id)
-    {
-        $user = User::findOrFail($id);
-        return view('admin.show_user', compact('user'));
-    }
-
-    // Create a new user (teacher or student)
-    public function create()
-    {
-        return view('admin.create_user');
-    }
-
-    // Store a new user
+    // Store a new teacher
     public function store(Request $request)
     {
-        $request->validate([
+        $validated = $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
-            'password' => 'required|string|min:8|confirmed',
-            'role' => 'required|string|in:teacher,student',
+            'password' => 'required|string|min:8',
         ]);
 
-        User::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => bcrypt($request->password),
-            'role' => $request->role,
-        ]);
+        $validated['password'] = Hash::make($validated['password']);
+        $validated['role'] = 'teacher';
 
-        return redirect()->route('admin.index')->with('success', 'User created successfully.');
+        return User::create($validated);
     }
 
-    // Delete a user
+    // Show a specific teacher
+    public function show($id)
+    {
+        return User::findOrFail($id);
+    }
+
+    // Update a teacher's information
+    public function update(Request $request, $id)
+    {
+        $user = User::findOrFail($id);
+        
+        $validated = $request->validate([
+            'name' => 'sometimes|string|max:255',
+            'email' => 'sometimes|string|email|max:255|unique:users,email,' . $user->id,
+            'password' => 'sometimes|string|min:8',
+        ]);
+
+        if ($request->has('password')) {
+            $validated['password'] = Hash::make($validated['password']);
+        }
+
+        $user->update($validated);
+        return response()->json(['message' => 'Teacher updated successfully!', 'teacher' => $user]);
+    }
+
+    // Delete a teacher
     public function destroy($id)
     {
         $user = User::findOrFail($id);
         $user->delete();
-        return redirect()->route('admin.index')->with('success', 'User deleted successfully.');
+        return response()->json(['message' => 'Teacher deleted successfully!']);
     }
 }

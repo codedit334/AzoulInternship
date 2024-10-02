@@ -7,54 +7,57 @@ use Illuminate\Http\Request;
 
 class TeacherController extends Controller
 {
+    // Get all teachers
     public function index()
-{
-    // $students = Student::all(); // Get all students
-    // return view('teacher.dashboard', compact('students'));
-    
-    $students = User::where('role', 'student')->get();
-    return view('teachers.index', compact('students'));
-}
-
-public function myStudents()
     {
-        $teacherId = auth()->id(); // Get the authenticated teacher's ID
-        $students = User::where('teacher_id', $teacherId)->get(); // Assuming you have a teacher_id field in the users table
-        return view('teachers.my_students', compact('students'));
+        return User::where('role', 'teacher')->get();
     }
 
-    // Add a new student
-    public function create()
-    {
-        return view('teachers.create_student');
-    }
-
-    // Store a new student
+    // Store a new teacher
     public function store(Request $request)
     {
-        $request->validate([
+        $validated = $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
-            'password' => 'required|string|min:8|confirmed',
+            'password' => 'required|string|min:8',
         ]);
 
-        $student = User::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => bcrypt($request->password),
-            'role' => 'student',
-            'teacher_id' => auth()->id(), // Assign the authenticated teacher as the student’s teacher
-        ]);
+        $validated['password'] = Hash::make($validated['password']);
+        $validated['role'] = 'teacher';
 
-        return redirect()->route('teachers.my_students')->with('success', 'Student added successfully.');
+        return User::create($validated);
     }
 
-    // Delete a student
+    // Show a specific teacher
+    public function show($id)
+    {
+        return User::findOrFail($id);
+    }
+
+    // Update a teacher's information
+    public function update(Request $request, $id)
+    {
+        $user = User::findOrFail($id);
+        
+        $validated = $request->validate([
+            'name' => 'sometimes|string|max:255',
+            'email' => 'sometimes|string|email|max:255|unique:users,email,' . $user->id,
+            'password' => 'sometimes|string|min:8',
+        ]);
+
+        if ($request->has('password')) {
+            $validated['password'] = Hash::make($validated['password']);
+        }
+
+        $user->update($validated);
+        return response()->json(['message' => 'Teacher updated successfully!', 'teacher' => $user]);
+    }
+
+    // Delete a teacher
     public function destroy($id)
     {
-        $student = User::findOrFail($id);
-        $student->delete();
-        return redirect()->route('teachers.my_students')->with('success', 'Student deleted successfully.');
+        $user = User::findOrFail($id);
+        $user->delete();
+        return response()->json(['message' => 'Teacher deleted successfully!']);
     }
-
 }
