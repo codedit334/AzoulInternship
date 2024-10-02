@@ -24,17 +24,16 @@ class TeacherController extends Controller
     $teacher = auth()->user();
 
     // Fetch students assigned to this teacher
-    $students = $teacher->students; // Using the relationship
+    $assignedStudents = $teacher->students; // Using the relationship
 
     // Fetch students NOT assigned to this teacher
     $unassignedStudents = User::where('role', 'student') // Assuming 'role' column distinguishes roles
                             ->where('teacher_id', '!=', $teacher->id) // Exclude students with this teacher_id
-                            ->orWhereNull('teacher_id') // Include students without any teacher
                             ->get();
                             
     // Return Inertia response with the data
     return Inertia::render('Teachers/MyStudents', [
-        'students' => $students,
+        'assignedStudents' => $assignedStudents,
         'unassignedStudents' => $unassignedStudents,
     ]);
 }
