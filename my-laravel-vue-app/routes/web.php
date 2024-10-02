@@ -16,6 +16,10 @@ use Inertia\Inertia;
 |
 */
 
+Route::get('/login', function () {
+    return view('welcome'); // or any other view where you load Vue
+})->name('login');
+
 Route::get('/', function () {
     return Inertia::render('Welcome', [
         'canLogin' => Route::has('login'),
