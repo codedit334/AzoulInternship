@@ -2,11 +2,20 @@
   <div>
     <h1>My Students</h1>
     <ul>
-      <li v-for="student in students" :key="student.id">
+      <li v-for="student in assignedStudents" :key="student.id">
         {{ student.name }} ({{ student.email }})
         <button @click="deleteStudent(student.id)">Delete</button>
       </li>
     </ul>
+
+    <h2>Unassigned Students</h2>
+    <ul>
+      <li v-for="student in unassignedStudents" :key="student.id">
+        {{ student.name }} ({{ student.email }})
+        <button @click="assignStudent(student.id)">Assign to Me</button>
+      </li>
+    </ul>
+
     <button @click="goToCreateStudent">Add Student</button>
   </div>
 </template>
@@ -17,7 +26,8 @@ import { Inertia } from '@inertiajs/inertia';
 export default {
   name: 'MyStudents',
   props: {
-    students: Array,
+    assignedStudents: Array,
+    unassignedStudents: Array,
   },
   methods: {
     deleteStudent(id) {
@@ -25,8 +35,13 @@ export default {
         Inertia.delete(`/teachers/students/${id}`);
       }
     },
+    assignStudent(id) {
+      if (confirm("Do you want to assign this student to yourself?")) {
+        Inertia.post(`/teachers/assign-student/${id}`);
+      }
+    },
     goToCreateStudent() {
-      Inertia.get('/teachers/create-student'); // Navigate to the create student page
+      Inertia.get('/teachers/create-student');
     },
   },
 };
