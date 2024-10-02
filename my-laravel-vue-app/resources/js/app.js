@@ -6,12 +6,16 @@
 
 import './bootstrap';
 import { createApp } from 'vue';
+import { createInertiaApp } from '@inertiajs/vue3'; // Use @inertiajs/inertia-vue for Vue 2
+import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers';
 
 /**
  * Next, we will create a fresh Vue application instance. You may then begin
  * registering components with the application instance so they are ready
  * to use in your application's views. An example is included for you.
  */
+
+
 
 const app = createApp({});
 
@@ -35,5 +39,14 @@ app.component('example-component', ExampleComponent);
  * an "id" attribute of "app". This element is included with the "auth"
  * scaffolding. Otherwise, you will need to add an element yourself.
  */
+
+createInertiaApp({
+    resolve: (name) => resolvePageComponent(`./Pages/${name}.vue`, import.meta.glob('./Pages/**/*.vue')),
+    setup({ el, App, props, plugin }) {
+        createApp({ render: () => h(App, props) })
+            .use(plugin)
+            .mount(el);
+    },
+});
 
 app.mount('#app');
