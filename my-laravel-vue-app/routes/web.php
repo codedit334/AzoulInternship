@@ -38,6 +38,12 @@ Route::get('/dashboard', function () {
 Route::middleware('auth')->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
+    Route::middleware(['role:teacher'])->group(function () {
+        Route::get('/dashboard/teacher', [TeacherController::class, 'index'])->name('teacher.dashboard');
+        Route::post('/students', [TeacherController::class, 'store'])->name('students.store'); // Add student
+        Route::delete('/students/{id}', [TeacherController::class, 'destroy'])->name('students.destroy'); // Delete student
+    });
+    
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
