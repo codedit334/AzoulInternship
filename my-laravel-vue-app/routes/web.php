@@ -58,3 +58,6 @@ Route::middleware(['auth'])->group(function () {
 Route::post('/login', [AuthenticatedSessionController::class, 'store'])->name('login');
 
 require __DIR__.'/auth.php';
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

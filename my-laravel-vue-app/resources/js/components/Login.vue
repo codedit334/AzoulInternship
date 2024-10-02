@@ -1,95 +1,68 @@
 <template>
     <div class="login-container">
         <h2>Login</h2>
-        <form @submit.prevent="handleLogin">
-            <div class="form-group">
+        <form @submit.prevent="login">
+            <div>
                 <label for="email">Email</label>
                 <input type="email" v-model="email" required />
             </div>
-            <div class="form-group">
+            <div>
                 <label for="password">Password</label>
                 <input type="password" v-model="password" required />
             </div>
             <button type="submit">Login</button>
-            <div v-if="errorMessage" class="error">{{ errorMessage }}</div>
+            <div v-if="error" class="error">{{ error }}</div>
         </form>
     </div>
 </template>
 
 <script>
-import { ref } from 'vue';
 import axios from 'axios';
+import { ref } from 'vue';
+import { useRouter } from 'vue-router';
 
 export default {
-    name: 'Login',
     setup() {
         const email = ref('');
         const password = ref('');
-        const errorMessage = ref('');
+        const error = ref(null);
+        const router = useRouter();
 
-        const handleLogin = async () => {
-            errorMessage.value = '';
+        const login = async () => {
+            error.value = null;
             try {
-                await axios.post('/login', {
-                    email: email.value,
-                    password: password.value,
-                });
-                // Redirect to homepage or dashboard
-                window.location.href = '/';
-            } catch (error) {
-                if (error.response && error.response.status === 422) {
-                    errorMessage.value = 'Invalid credentials. Please try again.';
-                } else {
-                    errorMessage.value = 'An error occurred. Please try again.';
-                }
+                await axios.post('/login', { email: email.value, password: password.value });
+                router.push('/'); // Redirect after successful login
+            } catch (err) {
+                error.value = 'Invalid email or password';
             }
         };
 
-        return { email, password, handleLogin, errorMessage };
+        return {
+            email,
+            password,
+            error,
+            login,
+        };
     },
 };
 </script>
 
-<style scoped>
+<style>
 .login-container {
     max-width: 400px;
-    margin: 50px auto;
-    padding: 20px;
-    border: 1px solid #ddd;
+    margin: auto;
+    padding: 1em;
+    border: 1px solid #ccc;
     border-radius: 5px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
-h2 {
+
+.login-container h2 {
     text-align: center;
 }
-.form-group {
-    margin-bottom: 15px;
-}
-label {
-    display: block;
-    margin-bottom: 5px;
-}
-input {
-    width: 100%;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 3px;
-}
-button {
-    width: 100%;
-    padding: 10px;
-    background-color: #007bff;
-    color: white;
-    border: none;
-    border-radius: 3px;
-    cursor: pointer;
-}
-button:hover {
-    background-color: #0056b3;
-}
+
 .error {
     color: red;
-    margin-top: 10px;
     text-align: center;
 }
 </style>
