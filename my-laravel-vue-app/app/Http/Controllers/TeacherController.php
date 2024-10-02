@@ -89,6 +89,27 @@ class TeacherController extends Controller
         //  return redirect()->route('teachers.my_students')->with('success', 'Student created successfully!');
      }
  
+     // Unassign a student from the current teacher
+     public function unassignStudent($id)
+{
+    // Get the authenticated teacher
+    $teacher = auth()->user();
+
+    // Find the student
+    $student = User::where('role', 'student')->findOrFail($id);
+
+    // Ensure the student is currently assigned to this teacher
+    if ($student->teacher_id == $teacher->id) {
+        // Unassign the student
+        $student->teacher_id = null;
+        $student->save();
+
+        return redirect()->back()->with('success', 'Student unassigned successfully.');
+    }
+
+    return redirect()->back()->with('error', 'You cannot unassign this student.');
+}
+
      // Delete a student
      public function destroy($id)
      {
