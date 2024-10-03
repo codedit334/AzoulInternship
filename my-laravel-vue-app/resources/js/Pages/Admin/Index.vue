@@ -1,24 +1,28 @@
 <template>
-  <div>
-    <h1>Admin Dashboard</h1>
+  <div class="admin-dashboard">
+    <h1 class="title">Admin Dashboard</h1>
 
-    <h2>Teachers</h2>
-    <ul>
-      <li v-for="teacher in teachers" :key="teacher.id">
-        {{ teacher.name }} ({{ teacher.email }})
-        <button @click="deleteUser(teacher.id)">Delete</button>
-      </li>
-    </ul>
-    <button @click="goToCreateTeacher">Add Teacher</button>
+    <div class="section">
+      <h2 class="section-title">Teachers</h2>
+      <ul class="user-list">
+        <li v-for="teacher in teachers" :key="teacher.id" class="user-item">
+          <span>{{ teacher.name }} ({{ teacher.email }})</span>
+          <button class="delete-button" @click="deleteUser(teacher.id)">Delete</button>
+        </li>
+      </ul>
+      <button class="add-button" @click="goToCreateTeacher">Add Teacher</button>
+    </div>
 
-    <h2>Students</h2>
-    <ul>
-      <li v-for="student in students" :key="student.id">
-        {{ student.name }} ({{ student.email }})
-        <button @click="deleteUser(student.id)">Delete</button>
-      </li>
-    </ul>
-    <button @click="goToCreateStudent">Add Student</button>
+    <div class="section">
+      <h2 class="section-title">Students</h2>
+      <ul class="user-list">
+        <li v-for="student in students" :key="student.id" class="user-item">
+          <span>{{ student.name }} ({{ student.email }})</span>
+          <button class="delete-button" @click="deleteUser(student.id)">Delete</button>
+        </li>
+      </ul>
+      <button class="add-button" @click="goToCreateStudent">Add Student</button>
+    </div>
   </div>
 </template>
 
@@ -48,5 +52,75 @@ export default {
 </script>
 
 <style scoped>
-/* Add your styles here */
+.admin-dashboard {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.title {
+  text-align: center;
+  color: #333;
+}
+
+.section {
+  margin-top: 20px;
+}
+
+.section-title {
+  font-size: 1.5rem;
+  margin-bottom: 10px;
+  color: #555;
+}
+
+.user-list {
+  list-style: none;
+  padding: 0;
+}
+
+.user-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  margin-bottom: 8px;
+}
+
+.delete-button {
+  background-color: #e74c3c;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 5px 10px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.delete-button:hover {
+  background-color: #c0392b;
+}
+
+.add-button {
+  background-color: #2ecc71;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 10px 15px;
+  cursor: pointer;
+  margin-top: 10px;
+  display: block;
+  width: 100%;
+  text-align: center;
+  transition: background-color 0.3s;
+}
+
+.add-button:hover {
+  background-color: #27ae60;
+}
 </style>
