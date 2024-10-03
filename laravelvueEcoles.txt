@@ -1,0 +1,4 @@
+etablissement: nom, adress.
+profile customusation: adress, etablisment id
+prof: lvl, ville, sexe, matiere, adress
+etud: lvl, ville, sexe, adress
