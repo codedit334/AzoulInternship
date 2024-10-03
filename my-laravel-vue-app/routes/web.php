@@ -75,6 +75,10 @@ Route::middleware(['auth'])->group(function () {
     
         Route::get('/admin/create-student', [AdminController::class, 'createStudent'])->name('admin.create_student');
         Route::post('/admin/store-student', [AdminController::class, 'storeStudent'])->name('admin.store_student');
+
+        Route::get('/admin/students/{id}/edit', [AdminController::class, 'editStudent'])->name('admin.students.edit');
+        Route::put('/admin/students/{id}', [AdminController::class, 'updateStudent'])->name('admin.students.update');
+
     });
     
     // Profile page route
