@@ -1,28 +1,32 @@
 <template>
-  <div>
+  <div class="my-students-container">
     <h1>My Students</h1>
 
     <!-- Assigned Students Section -->
     <h2>Assigned Students</h2>
-    <ul v-if="assignedStudents.length">
-      <li v-for="student in assignedStudents" :key="student.id">
+    <ul v-if="assignedStudents.length" class="students-list">
+      <li v-for="student in assignedStudents" :key="student.id" class="student-item">
         {{ student.name }} ({{ student.email }})
-        <button @click="unassignStudent(student.id)">Unassign</button>
-        <button @click="deleteStudent(student.id)">Delete</button>
+        <div class="buttons">
+          <button @click="unassignStudent(student.id)" class="unassign-button">Unassign</button>
+          <button @click="deleteStudent(student.id)" class="delete-button">Delete</button>
+        </div>
       </li>
     </ul>
-    <p v-else>No assigned students.</p>
+    <p v-else class="no-students-message">No assigned students.</p>
 
     <!-- Unassigned Students Section -->
     <h2>Unassigned Students</h2>
-    <ul v-if="unassignedStudents.length">
-      <li v-for="student in unassignedStudents" :key="student.id">
+    <ul v-if="unassignedStudents.length" class="students-list">
+      <li v-for="student in unassignedStudents" :key="student.id" class="student-item">
         {{ student.name }} ({{ student.email }})
-        <button @click="assignStudent(student.id)">Assign to Me</button>
-        <button @click="deleteStudent(student.id)">Delete</button>
+        <div class="buttons">
+          <button @click="assignStudent(student.id)" class="assign-button">Assign to Me</button>
+          <button @click="deleteStudent(student.id)" class="delete-button">Delete</button>
+        </div>
       </li>
     </ul>
-    <p v-else>No unassigned students.</p>
+    <p v-else class="no-students-message">No unassigned students.</p>
 
   </div>
 </template>
@@ -62,3 +66,94 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+.my-students-container {
+  max-width: 800px;
+  margin: 20px auto;
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+  text-align: center;
+  color: #333;
+}
+
+h2 {
+  margin-top: 20px;
+  color: #3498db; /* Change this to your preferred color */
+}
+
+.students-list {
+  list-style-type: none;
+  padding: 0;
+}
+
+.student-item {
+  padding: 10px;
+  border-bottom: 1px solid #ddd;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: background-color 0.3s;
+}
+
+.student-item:last-child {
+  border-bottom: none;
+}
+
+.student-item:hover {
+  background-color: #f1f1f1;
+}
+
+.buttons {
+  display: flex;
+  gap: 10px; /* Space between buttons */
+}
+
+.assign-button,
+.unassign-button,
+.delete-button {
+  padding: 5px 10px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.assign-button {
+  background-color: #28a745; /* Green */
+  color: white;
+}
+
+.assign-button:hover {
+  background-color: #218838; /* Darker green */
+}
+
+.unassign-button {
+  background-color: #ffc107; /* Yellow */
+  color: white;
+}
+
+.unassign-button:hover {
+  background-color: #e0a800; /* Darker yellow */
+}
+
+.delete-button {
+  background-color: #dc3545; /* Red */
+  color: white;
+}
+
+.delete-button:hover {
+  background-color: #c82333; /* Darker red */
+}
+
+.no-students-message {
+  text-align: center;
+  color: #666;
+  margin-top: 10px;
+}
+</style>
