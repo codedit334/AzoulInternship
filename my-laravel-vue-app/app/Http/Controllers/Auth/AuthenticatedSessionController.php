@@ -12,6 +12,9 @@ use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use Inertia\Response;
 
+use App\Http\Controllers\Auth\AuthenticatedSessionController;
+
+
 class AuthenticatedSessionController extends Controller
 {
     public function store(Request $request)
@@ -37,5 +40,14 @@ class AuthenticatedSessionController extends Controller
         $request->session()->regenerateToken();
 
         return response()->json(['message' => 'Logout successful']);
+    }
+}
+
+class CustomAuthenticatedSessionController extends AuthenticatedSessionController
+{
+    protected function authenticated(Request $request, $user)
+    {
+        // Redirect to your desired route, e.g., '/dashboard'
+        return redirect('/'); // Change this to your desired path
     }
 }

@@ -3,6 +3,7 @@
 use App\Http\Controllers\ProfileController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
+// use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
 
 
@@ -20,25 +21,26 @@ use App\Http\Controllers\StudentController;
 |
 */
 
-Route::get('/login', function () {
-    return view('welcome'); // or any other view where you load Vue
-})->name('login');
 
-    
+
+Route::post('/login', [AuthenticatedSessionController::class, 'store'])->name('login');
+
 Route::get('/', function () {
-    // return Inertia::render('Welcome', [
-    //     'canLogin' => Route::has('login'),
-    //     'canRegister' => Route::has('register'),
-    //     'laravelVersion' => Application::VERSION,
-    //     'phpVersion' => PHP_VERSION,
-    // ]);
-    return Inertia::render('InertiaTest');
+    if (Auth::check()) {
+        // User is logged in, redirect based on role
+        $user = Auth::user();
+        if ($user->role === 'admin') {
+            return redirect()->route('admin.index'); // Replace with your admin route
+        } elseif ($user->role === 'teacher') {
+            return redirect()->route('teachers.index'); // Replace with your teacher route
+        } elseif ($user->role === 'student') {
+            return redirect()->route('students.index'); // Replace with your student route
+        }
+    }
+
+    // User is not logged in, redirect to login page
+    return redirect()->route('login'); // Adjust this if your login route is different
 });
-
-Route::get('/dashboard', function () {
-    return Inertia::render('Dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
-
 
 Route::middleware(['auth'])->group(function () {
     // Teacher routes
@@ -74,10 +76,23 @@ Route::middleware(['auth'])->group(function () {
         Route::post('/admin/store-student', [AdminController::class, 'storeStudent'])->name('admin.store_student');
     });
 });
-Route::post('/login', [AuthenticatedSessionController::class, 'store'])->name('login');
 
 require __DIR__.'/auth.php';
 Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/login', function () {
+    if (Auth::check()) {
+        return redirect('/'); // Redirect to home if logged in
+    }
+
+    // Otherwise, show the login view
+    return view('auth.login');
+})->name('login');
+
+Route::get('/home', function () {
+    return redirect('/');
+})->name('home');
+
+Route::get('/dashboard', function () {
+    return redirect('/');
+})->name('dashboard');

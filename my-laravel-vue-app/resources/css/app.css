@@ -1,3 +1,32 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.navbar {
+    background-color: #3498db; /* Navbar background color */
+    padding: 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: white;
+}
+
+.user-name {
+    font-size: 16px;
+}
+
+.logout-button {
+    background-color: transparent; /* Button background */
+    color: white; /* Button text color */
+    border: 1px solid white; /* Button border */
+    padding: 8px 12px; /* Button padding */
+    border-radius: 4px; /* Rounded corners */
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.logout-button:hover {
+    background-color: white; /* Background color on hover */
+    color: #3498db; /* Text color on hover */
+}
+
