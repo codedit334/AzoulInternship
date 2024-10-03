@@ -42,28 +42,47 @@ public function index()
     // Store a new teacher
     public function storeTeacher(Request $request)
     {
-
-        // Validate request data
-        $request->validate([
+        // Validate the input fields
+        $validator = Validator::make($request->all(), [
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:8|confirmed',
+            'address' => 'required|string|max:255',
+            'city' => 'required|string|max:255',
+            'sex' => 'required|string|max:6',
+            'subject' => 'nullable|string|max:255', // Subject is nullable but required if teacher
+            'level' => 'required|integer|min:1|max:6',
         ]);
 
-        // Create a new teacher
-        $teacher = User::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
-            'role' => 'teacher',
-        ]);
+        // Return validation errors if any
+        if ($validator->fails()) {
+            return back()->withErrors($validator)->withInput();
+        }
 
-        // Fire the Registered event to send email verification
-        event(new Registered($teacher));
+        // Create a new user (teacher)
+        $user = new User();
+        $user->name = $request->name;
+        $user->email = $request->email;
+        $user->password = Hash::make($request->password);
+        $user->address = $request->address;
+        $user->city = $request->city;
+        $user->sex = $request->sex;
+        $user->lvl = $request->level;
+        
+        // Set role to 'teacher' by default for this method
+        $user->role = 'teacher';
 
+        // Set subject only if the role is 'teacher'
+        if ($user->role === 'teacher') {
+            $user->subject = $request->subject;
+        }
+
+        $user->save();
+
+        // Redirect to a success page or return a success response
         return redirect()->route('admin.index')->with('success', 'Teacher created successfully!');
     }
-
+    
     // Display the form to create a student
     public function createStudent()
     {
