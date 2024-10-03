@@ -79,6 +79,8 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/admin/edit-student/{id}', [AdminController::class, 'editStudent'])->name('admin.edit-student');
         Route::put('/admin/students/{id}', [AdminController::class, 'updateStudent'])->name('admin.update-student');
 
+        Route::get('/admin/edit-teacher/{id}', [AdminController::class, 'editTeacher'])->name('admin.editTeacher');
+        Route::put('/admin/teachers/{id}', [AdminController::class, 'updateTeacher'])->name('admin.updateTeacher');
     });
     
     // Profile page route
