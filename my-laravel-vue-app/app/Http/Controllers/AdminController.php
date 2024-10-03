@@ -139,6 +139,7 @@ class AdminController extends Controller
 
 public function updateStudent(Request $request, $id)
 {
+    
     $student = User::findOrFail($id);
 
     // Validate request data
@@ -153,6 +154,7 @@ public function updateStudent(Request $request, $id)
         'city' => 'required|string|max:255',
     ]);
 
+
     // Update student data
     $student->name = $request->name;
     $student->email = $request->email;
@@ -161,9 +163,10 @@ public function updateStudent(Request $request, $id)
     if ($request->password) {
         $student->password = Hash::make($request->password);
     }
+    
 
     $student->teacher_id = $request->teacher_id;
-    $student->level = $request->level;
+    $student->lvl = $request->level;
     $student->sex = $request->sex;
     $student->address = $request->address;
     $student->city = $request->city;
