@@ -10,7 +10,6 @@ use Inertia\Inertia;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\TeacherController;
 use App\Http\Controllers\StudentController;
-use App\Http\Controllers\ProfileController;
 
 /*
 |--------------------------------------------------------------------------

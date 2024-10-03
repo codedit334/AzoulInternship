@@ -29,10 +29,13 @@
             <input type="text" id="sex" name="sex" value="{{ old('sex', Auth::user()->sex) }}" required>
         </div>
 
+        <!-- Conditionally render the subject field for admin and teacher -->
+        @if (Auth::user()->role === 'admin' || Auth::user()->role === 'teacher')
         <div class="form-group">
             <label for="subject">Subject</label>
-            <input type="text" id="subject" name="subject" value="{{ old('subject', Auth::user()->subject) }}" required>
+            <input type="text" id="subject" name="subject" value="{{ old('subject', Auth::user()->subject) }}">
         </div>
+        @endif
 
         <div class="form-group">
             <label for="address">Address</label>
