@@ -28,6 +28,16 @@
         </div>
 
         <div class="form-group">
+            <label for="role">Role</label>
+            <select id="role" name="role" required
+                onchange="document.getElementById('subject-group').style.display = this.value === 'teacher' ? 'block' : 'none';">
+                <option value="" disabled selected>Select your role</option>
+                <option value="student">Student</option>
+                <option value="teacher">Teacher</option>
+            </select>
+        </div>
+
+        <div class="form-group">
             <label for="lvl">Level</label>
             <input type="number" id="lvl" name="lvl" value="{{ old('lvl') }}" min="1" max="6" required>
         </div>
@@ -42,7 +52,7 @@
             <input type="text" id="sex" name="sex" value="{{ old('sex') }}" required>
         </div>
 
-        <div class="form-group">
+        <div class="form-group" id="subject-group" style="display: none;">
             <label for="subject">Subject</label>
             <input type="text" id="subject" name="subject" value="{{ old('subject') }}">
         </div>
@@ -55,6 +65,18 @@
         <button type="submit" class="register-button">Register</button>
     </form>
 </div>
+
+@section('scripts')
+<script>
+// Optional: If you want to ensure the subject field is hidden initially based on role selection
+document.addEventListener('DOMContentLoaded', function() {
+    const roleSelect = document.getElementById('role');
+    const subjectGroup = document.getElementById('subject-group');
+    subjectGroup.style.display = roleSelect.value === 'teacher' ? 'block' : 'none';
+});
+</script>
+@endsection
+
 @endsection
 
 <style>
@@ -83,7 +105,8 @@
     margin-bottom: 5px;
 }
 
-.form-group input {
+.form-group input,
+.form-group select {
     width: 100%;
     padding: 8px;
     border: 1px solid #ddd;
