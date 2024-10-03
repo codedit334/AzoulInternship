@@ -125,4 +125,16 @@ class AdminController extends Controller
 
         return redirect()->route('admin.index')->with('success', 'Student created successfully!');
     }
+
+    public function editStudent($id)
+{
+    $student = User::findOrFail($id);
+    $teachers = User::where('role', 'teacher')->get(); // Fetch all teachers
+
+    return Inertia::render('Admin/EditStudent', [
+        'student' => $student, // Pass the student data to the view
+        'teachers' => $teachers, // Pass the teachers to the view
+    ]);
+}
+
 }
