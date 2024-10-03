@@ -1,17 +1,7 @@
-<nav class="navbar">
-    <div class="navbar-content">
-        @auth
-        <span class="user-name">Hello, {{ Auth::user()->name }}</span>
-        <a href="{{ route('profile') }}" class="profile-link">My Profile</a>
-        <a action="{{ route('logout') }}" method="POST" style="display: inline;">
-            @csrf
-            <button type="submit" class="logout-button">Logout</button>
-        </a>
-        @else
-        <a href="{{ route('login') }}" class="login-link">Login</a>
-        @endauth
-    </div>
-</nav>
+<!-- resources/views/profile.blade.php -->
+@extends('layouts.app')
+
+@section('content')
 <div class="profile-container">
 
     <h1 class="title">My Profile</h1>
@@ -45,7 +35,6 @@
             <input type="text" id="sex" name="sex" value="{{ old('sex', Auth::user()->sex) }}" required>
         </div>
 
-        <!-- Conditionally render the subject field for admin and teacher -->
         @if (Auth::user()->role === 'admin' || Auth::user()->role === 'teacher')
         <div class="form-group">
             <label for="subject">Subject</label>
@@ -58,15 +47,44 @@
             <input type="text" id="address" name="address" value="{{ old('address', Auth::user()->address) }}" required>
         </div>
 
-        <!-- Role is not editable -->
         <div class="form-group">
             <label>Role</label>
             <input type="text" value="{{ Auth::user()->role }}" disabled>
         </div>
 
+        <h2 class="password-title">Change Password</h2>
+
+        <div class="form-group">
+            <label for="current_password">Current Password</label>
+            <input type="password" id="current_password" name="current_password" required>
+        </div>
+
+        <div class="form-group">
+            <label for="new_password">New Password</label>
+            <input type="password" id="new_password" name="new_password" required>
+        </div>
+
+        <div class="form-group">
+            <label for="new_password_confirmation">Confirm New Password</label>
+            <input type="password" id="new_password_confirmation" name="new_password_confirmation" required>
+        </div>
+
         <button type="submit" class="save-button">Save Changes</button>
     </form>
 </div>
+
+@section('scripts')
+<script>
+// Optional: If you want to ensure the subject field is hidden initially based on role selection
+document.addEventListener('DOMContentLoaded', function() {
+    const roleSelect = document.getElementById('role');
+    const subjectGroup = document.getElementById('subject-group');
+    subjectGroup.style.display = roleSelect.value === 'teacher' ? 'block' : 'none';
+});
+</script>
+@endsection
+
+@endsection
 
 <style>
 .profile-container {
@@ -82,6 +100,12 @@
     text-align: center;
     color: #333;
     margin-bottom: 20px;
+}
+
+.password-title {
+    margin-top: 20px;
+    color: #3498db;
+    /* Change this to your preferred color */
 }
 
 .form-group {
@@ -115,84 +139,5 @@
 
 .save-button:hover {
     background-color: #2980b9;
-}
-
-.navbar {
-    background-color: #3498db;
-    padding: 15px;
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
-}
-
-.navbar-content {
-    display: flex;
-    gap: 15px;
-    align-items: center;
-}
-
-.user-name {
-    color: white;
-    font-size: 16px;
-}
-
-.profile-link,
-.logout-button {
-    padding: 10px 15px;
-    /* Adjust padding for both buttons */
-    border: none;
-    /* Remove border for consistency */
-    border-radius: 4px;
-    /* Consistent border radius */
-    cursor: pointer;
-    /* Pointer cursor on hover */
-    transition: background-color 0.3s ease;
-    /* Smooth transition on hover */
-    font-size: 16px;
-    /* Ensure both buttons have the same font size */
-}
-
-.profile-link {
-    background-color: #3498db;
-    /* Profile button background */
-    color: white;
-    /* Text color */
-    text-decoration: none;
-    /* No underline */
-}
-
-.profile-link:hover {
-    background-color: white;
-    /* Hover background */
-    color: #3498db;
-    /* Hover text color */
-}
-
-.logout-button {
-    background-color: #e74c3c;
-    /* Logout button background */
-    color: white;
-    /* Text color */
-}
-
-.logout-button:hover {
-    background-color: #c0392b;
-    /* Darker shade on hover */
-}
-
-
-.login-link {
-    color: white;
-    text-decoration: none;
-    font-size: 16px;
-    padding: 8px 12px;
-    border: 1px solid white;
-    border-radius: 4px;
-    transition: background-color 0.3s ease, color 0.3s ease;
-}
-
-.login-link:hover {
-    background-color: white;
-    color: #3498db;
 }
 </style>
