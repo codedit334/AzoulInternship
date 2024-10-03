@@ -11,6 +11,10 @@ use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
 use Inertia\Response;
 
+use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\Hash;
+
+
 class ProfileController extends Controller
 {
     public function show()
@@ -29,16 +33,23 @@ class ProfileController extends Controller
             'lvl' => 'required|integer',
             'city' => 'required|string|max:255',
             'sex' => 'required|string|max:255',
-            'subject' => 'required|string|max:255',
             'address' => 'required|string|max:255',
             'current_password' => 'required|string',
             'new_password' => 'nullable|string|min:8|confirmed',
+            'subject' => [
+            'nullable', // Allow null value
+            'string',
+            'max:255',
+            // Conditionally require subject if the user is a teacher
+            Rule::requiredIf($user->role === 'teacher'),
+        ],
         ]);
+
 
         // Update the user's information
        // Check if current password is correct
        if (!Hash::check($request->current_password, $user->password)) {
-        return back()->withErrors(['current_password' => 'Current password is incorrect.']);
+        return back()->with(['error' => 'Current password is incorrect.']);
     }
 
     // Update user details
