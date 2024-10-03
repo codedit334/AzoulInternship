@@ -7,7 +7,10 @@
       <ul class="user-list">
         <li v-for="teacher in teachers" :key="teacher.id" class="user-item">
           <span>{{ teacher.name }} ({{ teacher.email }})</span>
-          <button class="delete-button" @click="deleteUser(teacher.id)">Delete</button>
+          <div>
+            <button class="edit-button" @click="goToEditTeacher(teacher.id)">Edit</button>
+            <button class="delete-button" @click="deleteUser(teacher.id)">Delete</button>
+          </div>
         </li>
       </ul>
       <button class="add-button" @click="goToCreateTeacher">Add Teacher</button>
@@ -18,13 +21,19 @@
       <ul class="user-list">
         <li v-for="student in students" :key="student.id" class="user-item">
           <span>{{ student.name }} ({{ student.email }})</span>
-          <button class="delete-button" @click="deleteUser(student.id)">Delete</button>
+          <div>
+            <button class="edit-button" @click="goToEditStudent(student.id)">Edit</button>
+            <button class="delete-button" @click="deleteUser(student.id)">Delete</button>
+          </div>
         </li>
       </ul>
       <button class="add-button" @click="goToCreateStudent">Add Student</button>
     </div>
   </div>
 </template>
+
+
+
 
 <script>
 import { Inertia } from '@inertiajs/inertia';
@@ -47,9 +56,16 @@ export default {
     goToCreateStudent() {
       Inertia.get('/admin/create-student');
     },
+    goToEditTeacher(id) {
+      Inertia.get(`/admin/edit-teacher/${id}`); // Route to the edit teacher page
+    },
+    goToEditStudent(id) {
+      Inertia.get(`/admin/edit-student/${id}`); // Route to the edit student page
+    },
   },
 };
 </script>
+
 
 <style scoped>
 .admin-dashboard {
@@ -122,5 +138,20 @@ export default {
 
 .add-button:hover {
   background-color: #27ae60;
+}
+
+.edit-button {
+  background-color: #3498db; /* Blue color */
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 5px 10px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  margin-right: 5px; /* Add some space between buttons */
+}
+
+.edit-button:hover {
+  background-color: #2980b9; /* Darker blue on hover */
 }
 </style>

@@ -11,8 +11,8 @@ use Illuminate\Auth\Events\Registered;
 
 class AdminController extends Controller
 {
-// Get all users (teachers and students)
-public function index()
+    // Get all users (teachers and students)
+    public function index()
     {
         // Fetch all teachers and students
         $teachers = User::where('role', 'teacher')->get();
@@ -67,8 +67,8 @@ public function index()
         $user->address = $request->address;
         $user->city = $request->city;
         $user->sex = $request->sex;
-        $user->lvl = $request->level;
-        
+        $user->level = $request->level; // Updated field name
+
         // Set role to 'teacher' by default for this method
         $user->role = 'teacher';
 
@@ -82,49 +82,47 @@ public function index()
         // Redirect to a success page or return a success response
         return redirect()->route('admin.index')->with('success', 'Teacher created successfully!');
     }
-    
+
     // Display the form to create a student
     public function createStudent()
     {
         $teachers = User::where('role', 'teacher')->get(); // Fetch all teachers
-         return Inertia::render('Admin/CreateStudent', [
-        'teachers' => $teachers, // Pass the teachers to the view
+        return Inertia::render('Admin/CreateStudent', [
+            'teachers' => $teachers, // Pass the teachers to the view
         ]);
     }
 
     // Store a new student
     public function storeStudent(Request $request)
-{
-    // Validate request data
-    $request->validate([
-        'name' => 'required|string|max:255',
-        'email' => 'required|string|email|max:255|unique:users',
-        'password' => 'required|string|min:8|confirmed',
-        'teacher_id' => 'required|exists:users,id', // Ensure the teacher exists
-        'level' => 'required|integer|min:1|max:6', // Assuming levels are from 1 to 6
-        'sex' => 'required|string|max:10', // 'Male', 'Female', or other options
-        'address' => 'required|string|max:255',
-        'city' => 'required|string|max:255',
-    ]);
+    {
+        // Validate request data
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255|unique:users',
+            'password' => 'required|string|min:8|confirmed',
+            'teacher_id' => 'required|exists:users,id', // Ensure the teacher exists
+            'level' => 'required|integer|min:1|max:6', // Assuming levels are from 1 to 6
+            'sex' => 'required|string|max:10', // 'Male', 'Female', or other options
+            'address' => 'required|string|max:255',
+            'city' => 'required|string|max:255',
+        ]);
 
-    // Create a new student
-    $student = User::create([
-        'name' => $request->name,
-        'email' => $request->email,
-        'password' => Hash::make($request->password),
-        'teacher_id' => $request->teacher_id,
-        'level' => $request->level,
-        'sex' => $request->sex,
-        'address' => $request->address,
-        'city' => $request->city,
-        'role' => 'student',
-    ]);
+        // Create a new student
+        $student = User::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => Hash::make($request->password),
+            'teacher_id' => $request->teacher_id,
+            'level' => $request->level,
+            'sex' => $request->sex,
+            'address' => $request->address,
+            'city' => $request->city,
+            'role' => 'student',
+        ]);
 
-    // Fire the Registered event to send email verification
-    event(new Registered($student));
+        // Fire the Registered event to send email verification
+        event(new Registered($student));
 
-    return redirect()->route('admin.index')->with('success', 'Student created successfully!');
+        return redirect()->route('admin.index')->with('success', 'Student created successfully!');
+    }
 }
-
-}
-?>
