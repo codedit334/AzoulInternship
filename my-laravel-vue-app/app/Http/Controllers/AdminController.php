@@ -176,5 +176,55 @@ public function updateStudent(Request $request, $id)
     return redirect()->route('admin.index')->with('success', 'Student updated successfully!');
 }
 
+// Display the form to edit a teacher
+public function editTeacher($id)
+{
+    $teacher = User::findOrFail($id); // Fetch the teacher by ID
+    return Inertia::render('Admin/EditTeacher', [
+        'teacher' => $teacher, // Pass the teacher data to the view
+    ]);
+}
+
+// Update the teacher details
+public function updateTeacher(Request $request, $id)
+{
+    // Validate the input fields
+    $validator = Validator::make($request->all(), [
+        'name' => 'required|string|max:255',
+        'email' => 'required|string|email|max:255|unique:users,email,'.$id,
+        'password' => 'nullable|string|min:8|confirmed',
+        'address' => 'required|string|max:255',
+        'city' => 'required|string|max:255',
+        'sex' => 'required|string|max:6',
+        'subject' => 'nullable|string|max:255',
+        'level' => 'required|integer|min:1|max:6',
+    ]);
+
+    // Return validation errors if any
+    if ($validator->fails()) {
+        return back()->withErrors($validator)->withInput();
+    }
+
+    // Find the teacher and update their details
+    $teacher = User::findOrFail($id);
+    $teacher->name = $request->name;
+    $teacher->email = $request->email;
+
+    // Update password only if provided
+    if ($request->password) {
+        $teacher->password = Hash::make($request->password);
+    }
+
+    $teacher->address = $request->address;
+    $teacher->city = $request->city;
+    $teacher->sex = $request->sex;
+    $teacher->subject = $request->subject;
+    $teacher->lvl = $request->level;
+
+    $teacher->save(); // Save the changes
+
+    return redirect()->route('admin.index')->with('success', 'Teacher updated successfully!');
+}
+
 
 }
