@@ -10,6 +10,8 @@ use Inertia\Inertia;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\TeacherController;
 use App\Http\Controllers\StudentController;
+use App\Http\Controllers\ProfileController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -75,6 +77,12 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/admin/create-student', [AdminController::class, 'createStudent'])->name('admin.create_student');
         Route::post('/admin/store-student', [AdminController::class, 'storeStudent'])->name('admin.store_student');
     });
+    
+    // Profile page route
+Route::get('/profile', [ProfileController::class, 'show'])->name('profile');
+
+// Update profile route
+Route::put('/profile', [ProfileController::class, 'update'])->name('profile.update');
 });
 
 require __DIR__.'/auth.php';
