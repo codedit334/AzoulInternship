@@ -1,4 +1,18 @@
-<!-- resources/views/profile.blade.php -->
+<nav class="navbar" style=" margin-bottom: 55px; ">
+    <div class="navbar-content">
+        @auth
+        <span class="user-name">Hello, {{ Auth::user()->name }}</span>
+        <a href="{{ route('profile') }}" class="profile-link">My Profile</a>
+        <form action="{{ route('logout') }}" method="POST" style="display: inline;">
+            @csrf
+            <button type="submit" class="logout-button">Logout</button>
+        </form>
+        @else
+        <a href="{{ route('login') }}" class="login-link">Login</a>
+        @endauth
+    </div>
+</nav>
+
 @extends('layouts.app')
 
 @if ($errors->any())

@@ -1,4 +1,28 @@
 etablissement: nom, adress.
-profile customusation: adress, etablisment id
+profile customusation: etablisment id, change password, profile pic
 prof: lvl, ville, sexe, matiere, adress
 etud: lvl, ville, sexe, adress
+
+
+Admin edit!
+Admin adds
+
+
+
+school?
+
+
+
+new tables
+
+tables:
+users: role, name, email, adress, age, level, sexe, password, profile pic.
+student:
+teacher: subject.
+school: label.
+
+can student teacher and school use the users table column or they need their own columns, tell me the best practices
+
+
+Rewrite component based
+Error handeling

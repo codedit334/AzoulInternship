@@ -16,7 +16,78 @@
     @vite(['resources/js/app.js', "resources/js/Pages/{$page['component']}.vue"])
     @inertiaHead
 
-    <!-- <link rel="stylesheet" href="{{ asset('css/app.css') }}"> -->
+    <style>
+    body {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    .navbar {
+        background-color: #3498db;
+        /* padding: 15px 0 15px 15px; */
+        padding: 15px;
+        justify-content: flex-end;
+        align-items: center;
+        margin-bottom: 55px;
+    }
+
+    .navbar-content {
+        display: flex;
+        gap: 15px;
+        align-items: center;
+    }
+
+    .user-name {
+        color: white;
+        font-size: 16px;
+    }
+
+    .profile-link {
+        color: white;
+        text-decoration: none;
+        font-size: 16px;
+        padding: 8px 12px;
+        border: 1px solid white;
+        border-radius: 4px;
+        transition: background-color 0.3s ease, color 0.3s ease;
+    }
+
+    .profile-link:hover {
+        background-color: white;
+        color: #3498db;
+    }
+
+    .logout-button {
+        background-color: #e74c3c;
+        color: white;
+        border: none;
+        padding: 8px 12px;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+
+    .logout-button:hover {
+        background-color: #c0392b;
+    }
+
+    .login-link {
+        color: white;
+        text-decoration: none;
+        font-size: 16px;
+        padding: 8px 12px;
+        border: 1px solid white;
+        border-radius: 4px;
+        transition: background-color 0.3s ease, color 0.3s ease;
+    }
+
+    .login-link:hover {
+        background-color: white;
+        color: #3498db;
+    }
+    </style>
+
 </head>
 
 <body class="font-sans antialiased">
@@ -34,76 +105,13 @@
             @endauth
         </div>
     </nav>
-    <!-- @extends('layouts.app') -->
 
     @yield('scripts')
-    <!-- @yield('content') -->
     @inertia
 </body>
 
 </html>
 
-<!-- <style>
-.navbar {
-    background-color: #3498db;
-    padding: 15px;
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
-}
+<style>
 
-.navbar-content {
-    display: flex;
-    gap: 15px;
-    align-items: center;
-}
-
-.user-name {
-    color: white;
-    font-size: 16px;
-}
-
-.profile-link {
-    color: white;
-    text-decoration: none;
-    font-size: 16px;
-    padding: 8px 12px;
-    border: 1px solid white;
-    border-radius: 4px;
-    transition: background-color 0.3s ease, color 0.3s ease;
-}
-
-.profile-link:hover {
-    background-color: white;
-    color: #3498db;
-}
-
-.logout-button {
-    background-color: #e74c3c;
-    color: white;
-    border: none;
-    padding: 8px 12px;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-}
-
-.logout-button:hover {
-    background-color: #c0392b;
-}
-
-.login-link {
-    color: white;
-    text-decoration: none;
-    font-size: 16px;
-    padding: 8px 12px;
-    border: 1px solid white;
-    border-radius: 4px;
-    transition: background-color 0.3s ease, color 0.3s ease;
-}
-
-.login-link:hover {
-    background-color: white;
-    color: #3498db;
-}
-</style> -->
+</style>
