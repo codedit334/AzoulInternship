@@ -10,6 +10,8 @@
 </head>
 
 <body>
+    @extends('layouts.app')
+
     <div id="app"></div> <!-- Vue will mount here -->
 </body>
 

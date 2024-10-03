@@ -34,14 +34,16 @@
             @endauth
         </div>
     </nav>
+    <!-- @extends('layouts.app') -->
+
     @yield('scripts')
-    @yield('content')
+    <!-- @yield('content') -->
     @inertia
 </body>
 
 </html>
 
-<style>
+<!-- <style>
 .navbar {
     background-color: #3498db;
     padding: 15px;
@@ -104,4 +106,4 @@
     background-color: white;
     color: #3498db;
 }
-</style>
+</style> -->
