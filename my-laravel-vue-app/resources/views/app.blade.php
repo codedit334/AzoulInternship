@@ -16,20 +16,90 @@
     @vite(['resources/js/app.js', "resources/js/Pages/{$page['component']}.vue"])
     @inertiaHead
 
-    <link rel="stylesheet" href="{{ asset('css/app.css') }}">
+    <!-- <link rel="stylesheet" href="{{ asset('css/app.css') }}"> -->
 </head>
 
 <body class="font-sans antialiased">
     <nav class="navbar">
         <div class="navbar-content">
+            @auth
             <span class="user-name">Hello, {{ Auth::user()->name }}</span>
+            <a href="{{ route('profile') }}" class="profile-link">My Profile</a>
             <form action="{{ route('logout') }}" method="POST" style="display: inline;">
                 @csrf
                 <button type="submit" class="logout-button">Logout</button>
             </form>
+            @else
+            <a href="{{ route('login') }}" class="login-link">Login</a>
+            @endauth
         </div>
     </nav>
     @inertia
 </body>
 
 </html>
+
+<style>
+.navbar {
+    background-color: #3498db;
+    padding: 15px;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.navbar-content {
+    display: flex;
+    gap: 15px;
+    align-items: center;
+}
+
+.user-name {
+    color: white;
+    font-size: 16px;
+}
+
+.profile-link {
+    color: white;
+    text-decoration: none;
+    font-size: 16px;
+    padding: 8px 12px;
+    border: 1px solid white;
+    border-radius: 4px;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.profile-link:hover {
+    background-color: white;
+    color: #3498db;
+}
+
+.logout-button {
+    background-color: #e74c3c;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.logout-button:hover {
+    background-color: #c0392b;
+}
+
+.login-link {
+    color: white;
+    text-decoration: none;
+    font-size: 16px;
+    padding: 8px 12px;
+    border: 1px solid white;
+    border-radius: 4px;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.login-link:hover {
+    background-color: white;
+    color: #3498db;
+}
+</style>
