@@ -6,18 +6,46 @@
         <label for="name">Name</label>
         <input type="text" id="name" v-model="form.name" required class="form-input">
       </div>
+
       <div class="form-group">
         <label for="email">Email</label>
         <input type="email" id="email" v-model="form.email" required class="form-input">
       </div>
+
       <div class="form-group">
         <label for="password">Password</label>
         <input type="password" id="password" v-model="form.password" required class="form-input">
       </div>
+
       <div class="form-group">
         <label for="password_confirmation">Confirm Password</label>
         <input type="password" id="password_confirmation" v-model="form.password_confirmation" required class="form-input">
       </div>
+
+      <div class="form-group">
+        <label for="level">Level</label>
+        <input type="number" id="level" v-model="form.level" min="1" max="6" required class="form-input">
+      </div>
+
+      <div class="form-group">
+        <label for="sex">Sex</label>
+        <select id="sex" v-model="form.sex" required class="form-select">
+          <option value="" disabled>Select Sex</option>
+          <option value="Male">Male</option>
+          <option value="Female">Female</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="address">Address</label>
+        <input type="text" id="address" v-model="form.address" required class="form-input">
+      </div>
+
+      <div class="form-group">
+        <label for="city">City</label>
+        <input type="text" id="city" v-model="form.city" required class="form-input">
+      </div>
+
       <div class="form-group">
         <label for="teacher_id">Assign Teacher</label>
         <select id="teacher_id" v-model="form.teacher_id" required class="form-select">
@@ -27,6 +55,7 @@
           </option>
         </select>
       </div>
+
       <button type="submit" class="submit-button">Create Student</button>
     </form>
   </div>
@@ -46,6 +75,10 @@ export default {
         email: '',
         password: '',
         password_confirmation: '',
+        level: '',
+        sex: '',
+        address: '',
+        city: '',
         teacher_id: '',
       },
     };
