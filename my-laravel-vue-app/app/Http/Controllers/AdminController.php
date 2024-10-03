@@ -137,4 +137,41 @@ class AdminController extends Controller
     ]);
 }
 
+public function updateStudent(Request $request, $id)
+{
+    $student = User::findOrFail($id);
+
+    // Validate request data
+    $request->validate([
+        'name' => 'required|string|max:255',
+        'email' => 'required|string|email|max:255|unique:users,email,' . $student->id,
+        'password' => 'nullable|string|min:8|confirmed',
+        'teacher_id' => 'required|exists:users,id', // Ensure the teacher exists
+        'level' => 'required|integer|min:1|max:6', // Assuming levels are from 1 to 6
+        'sex' => 'required|string|max:10', // 'Male', 'Female', or other options
+        'address' => 'required|string|max:255',
+        'city' => 'required|string|max:255',
+    ]);
+
+    // Update student data
+    $student->name = $request->name;
+    $student->email = $request->email;
+
+    // Only update the password if it's provided
+    if ($request->password) {
+        $student->password = Hash::make($request->password);
+    }
+
+    $student->teacher_id = $request->teacher_id;
+    $student->level = $request->level;
+    $student->sex = $request->sex;
+    $student->address = $request->address;
+    $student->city = $request->city;
+    
+    $student->save();
+
+    return redirect()->route('admin.index')->with('success', 'Student updated successfully!');
+}
+
+
 }
