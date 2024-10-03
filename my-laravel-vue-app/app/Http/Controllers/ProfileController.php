@@ -31,11 +31,36 @@ class ProfileController extends Controller
             'sex' => 'required|string|max:255',
             'subject' => 'required|string|max:255',
             'address' => 'required|string|max:255',
+            'current_password' => 'required|string',
+            'new_password' => 'nullable|string|min:8|confirmed',
         ]);
 
         // Update the user's information
-        $user->update($request->only(['name', 'email', 'lvl', 'city', 'sex', 'subject', 'address']));
+       // Check if current password is correct
+       if (!Hash::check($request->current_password, $user->password)) {
+        return back()->withErrors(['current_password' => 'Current password is incorrect.']);
+    }
 
-        return redirect()->route('profile')->with('success', 'Profile updated successfully');
+    // Update user details
+    $user->name = $request->name;
+    $user->email = $request->email;
+    $user->lvl = $request->lvl;
+    $user->city = $request->city;
+    $user->sex = $request->sex;
+    $user->address = $request->address;
+
+    // Update subject if role is teacher
+    if ($user->role === 'teacher') {
+        $user->subject = $request->subject;
+    }
+
+    // Update password if new password is provided
+    if ($request->new_password) {
+        $user->password = Hash::make($request->new_password);
+    }
+
+    $user->save();
+
+    return redirect()->back()->with('success', 'Profile updated successfully!');
     }
 }
