@@ -34,6 +34,7 @@
             @endauth
         </div>
     </nav>
+    @yield('content')
     @inertia
 </body>
 
