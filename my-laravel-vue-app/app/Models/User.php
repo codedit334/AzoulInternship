@@ -28,6 +28,8 @@ class User extends Authenticatable
         'sex', 
         'subject', 
         'address',
+        'school',
+        'school_id',
     ];
 
     /**
