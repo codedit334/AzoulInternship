@@ -14,9 +14,11 @@ return new class extends Migration
     public function up()
     {
         Schema::table('users', function (Blueprint $table) {
-            //
+            $table->string('school')->nullable();   // Add school column
+            $table->unsignedBigInteger('school_id')->nullable();   // Add school_id column
         });
     }
+    
 
     /**
      * Reverse the migrations.
@@ -26,7 +28,7 @@ return new class extends Migration
     public function down()
     {
         Schema::table('users', function (Blueprint $table) {
-            //
+            $table->dropColumn(['school', 'school_id']);  // Rollback the columns if needed
         });
     }
 };
