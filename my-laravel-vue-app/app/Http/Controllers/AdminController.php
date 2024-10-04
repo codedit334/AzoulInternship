@@ -229,13 +229,13 @@ public function updateTeacher(Request $request, $id)
 public function storeSchool(Request $request)
 {
     // Validate the school name
-    $request->validate([
-        'name' => 'required|string|max:255',
-    ]);
+    // $request->validate([
+    //     'name' => 'required|string|max:255',
+    // ]);
 
     // Create the school
-    School::create([
-        'name' => $request->name,
+    User::create([
+        'school' => $request->name,
     ]);
 
     // Redirect with a success message

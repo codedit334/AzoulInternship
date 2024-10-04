@@ -41,6 +41,7 @@ export default {
   },
   methods: {
     submit() {
+    console.log(this.form);
       Inertia.post('/admin/store-school', this.form); // Submit the new school name to the server
     },
   },

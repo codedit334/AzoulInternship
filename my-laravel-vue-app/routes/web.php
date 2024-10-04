@@ -82,7 +82,7 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/admin/edit-teacher/{id}', [AdminController::class, 'editTeacher'])->name('admin.editTeacher');
         Route::put('/admin/teachers/{id}', [AdminController::class, 'updateTeacher'])->name('admin.updateTeacher');
 
-        Route::get('/admin/add-student', [AdminController::class, 'addSchool'])->name('admin.add-student');
+        Route::get('/admin/add-school', [AdminController::class, 'createSchool'])->name('admin.create-school');
         Route::post('/admin/store-school', [AdminController::class, 'storeSchool'])->name('admin.store-school');
     });
     
