@@ -67,7 +67,7 @@ class AdminController extends Controller
         $user->address = $request->address;
         $user->city = $request->city;
         $user->sex = $request->sex;
-        $user->level = $request->level; // Updated field name
+        $user->lvl = $request->level; // Updated field name
 
         // Set role to 'teacher' by default for this method
         $user->role = 'teacher';
