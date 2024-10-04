@@ -1,8 +1,20 @@
 <template>
-  <div class="create-school-form">
+  <div class="add-school-container">
+    <h1 class="form-title">Schools</h1>
+
+    <!-- List of Schools -->
+    <div class="school-list">
+      <h2>All Schools</h2>
+      <ul>
+        <li v-for="school in schools" :key="school.id" class="school-item">
+          {{ school.name }}
+        </li>
+      </ul>
+    </div>
+
+    <!-- Form to Add a New School -->
     <h1 class="form-title">Create School</h1>
     <form @submit.prevent="submit" class="form">
-      <!-- School Name -->
       <div class="form-group">
         <label for="name">School Name</label>
         <input type="text" id="name" v-model="form.name" required class="form-input">
@@ -17,6 +29,9 @@
 import { Inertia } from '@inertiajs/inertia';
 
 export default {
+  props: {
+    schools: Array, // Pass the schools data from the backend
+  },
   data() {
     return {
       form: {
@@ -26,15 +41,15 @@ export default {
   },
   methods: {
     submit() {
-      Inertia.post('/admin/store-school', this.form); // Submit only the school name to the server
+      Inertia.post('/admin/store-school', this.form); // Submit the new school name to the server
     },
   },
 };
 </script>
 
 <style scoped>
-.create-school-form {
-  max-width: 400px;
+.add-school-container {
+  max-width: 600px;
   margin: 0 auto;
   padding: 20px;
   background-color: #f9f9f9;
@@ -48,6 +63,18 @@ export default {
   margin-bottom: 20px;
 }
 
+.school-list {
+  margin-bottom: 30px;
+}
+
+.school-item {
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  margin-bottom: 10px;
+  background-color: #fff;
+}
+
 .form {
   display: flex;
   flex-direction: column;
@@ -55,12 +82,6 @@ export default {
 
 .form-group {
   margin-bottom: 15px;
-}
-
-.label {
-  font-weight: bold;
-  margin-bottom: 5px;
-  color: #555;
 }
 
 .form-input {
