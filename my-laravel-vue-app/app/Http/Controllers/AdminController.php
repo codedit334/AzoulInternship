@@ -226,5 +226,20 @@ public function updateTeacher(Request $request, $id)
     return redirect()->route('admin.index')->with('success', 'Teacher updated successfully!');
 }
 
+public function storeSchool(Request $request)
+{
+    // Validate the school name
+    $request->validate([
+        'name' => 'required|string|max:255',
+    ]);
+
+    // Create the school
+    School::create([
+        'name' => $request->name,
+    ]);
+
+    // Redirect with a success message
+    return redirect()->route('admin.schools')->with('success', 'School created successfully!');
+}
 
 }
