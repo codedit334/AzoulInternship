@@ -242,4 +242,14 @@ public function storeSchool(Request $request)
     return redirect()->route('admin.schools')->with('success', 'School created successfully!');
 }
 
+public function createSchool()
+{
+    // Fetch all schools from the users table
+    $schools = User::where('role', 'school')->get(); // Adjust the role as needed
+
+    return Inertia::render('Admin/AddSchool', [
+        'schools' => $schools, // Pass the schools to the view
+    ]);
+}
+
 }
