@@ -13,6 +13,8 @@ use Inertia\Response;
 
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
+
 
 
 class ProfileController extends Controller
@@ -43,6 +45,8 @@ class ProfileController extends Controller
             // Conditionally require subject if the user is a teacher
             Rule::requiredIf($user->role === 'teacher'),
         ],
+        'profile_picture' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048', // Validate the profile picture
+
         ]);
 
 
@@ -50,6 +54,18 @@ class ProfileController extends Controller
        // Check if current password is correct
        if (!Hash::check($request->current_password, $user->password)) {
         return back()->with(['error' => 'Current password is incorrect.']);
+        }
+
+        // Handle file upload
+    if ($request->hasFile('profile_picture')) {
+        // Delete the old profile picture if it exists
+        if ($user->profile_picture) {
+            Storage::delete($user->profile_picture);
+        }
+
+        // Store the new profile picture
+        $filePath = $request->file('profile_picture')->store('profile_pictures', 'public');
+        $user->profile_picture = $filePath;
     }
 
     // Update user details
