@@ -1,15 +1,16 @@
 etablissement: nom, adress.
-profile customusation: etablisment id, change password, profile pic
+profile customusation: etablisment id, , profile pic
 prof: lvl, ville, sexe, matiere, adress
 etud: lvl, ville, sexe, adress
 
 
-Admin edit!
-Admin adds
-
-
-
+Admin edit! DONE
+change password DONE
+Admin add DONE
+profile pic
 school?
+
+
 
 
 

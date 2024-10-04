@@ -37,12 +37,22 @@
 </div>
 @endif
 
-
 @section('content')
 <div class="profile-container">
 
     <h1 class="title">My Profile</h1>
-    <form action="{{ route('profile.update') }}" method="POST">
+
+    <!-- Display current profile picture -->
+    <div class="profile-picture">
+        @if (Auth::user()->profile_picture)
+        <img src="{{ asset('storage/' . Auth::user()->profile_picture) }}" alt="Profile Picture" class="profile-img">
+        @else
+        <img src="{{ asset('images/default-profile.png') }}" alt="Default Profile Picture" class="profile-img">
+        @endif
+    </div>
+
+    <!-- Profile Update Form -->
+    <form action="{{ route('profile.update') }}" method="POST" enctype="multipart/form-data">
         @csrf
         @method('PUT')
 
@@ -84,6 +94,12 @@
             <input type="text" id="address" name="address" value="{{ old('address', Auth::user()->address) }}" required>
         </div>
 
+        <!-- Add file input for profile picture -->
+        <div class="form-group">
+            <label for="profile_picture">Profile Picture</label>
+            <input type="file" id="profile_picture" name="profile_picture" accept="image/*">
+        </div>
+
         <div class="form-group">
             <label>Role</label>
             <input type="text" value="{{ Auth::user()->role }}" disabled>
@@ -109,19 +125,8 @@
         <button type="submit" class="save-button">Save Changes</button>
     </form>
 </div>
-
-@section('scripts')
-<script>
-// Optional: If you want to ensure the subject field is hidden initially based on role selection
-document.addEventListener('DOMContentLoaded', function() {
-    const roleSelect = document.getElementById('role');
-    const subjectGroup = document.getElementById('subject-group');
-    subjectGroup.style.display = roleSelect.value === 'teacher' ? 'block' : 'none';
-});
-</script>
 @endsection
 
-@endsection
 
 <style>
 .profile-container {
@@ -176,5 +181,19 @@ document.addEventListener('DOMContentLoaded', function() {
 
 .save-button:hover {
     background-color: #2980b9;
+}
+
+/* Styling for profile picture */
+.profile-picture {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.profile-img {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #ddd;
 }
 </style>
