@@ -2,6 +2,9 @@
   <div class="admin-dashboard">
     <h1 class="title">Admin Dashboard</h1>
 
+    <!-- Add School Button -->
+    <button class="add-school-button" @click="goToAddSchool">Add School</button>
+
     <div class="section">
       <h2 class="section-title">Teachers</h2>
       <ul class="user-list">
@@ -32,9 +35,6 @@
   </div>
 </template>
 
-
-
-
 <script>
 import { Inertia } from '@inertiajs/inertia';
 
@@ -62,10 +62,12 @@ export default {
     goToEditStudent(id) {
       Inertia.get(`/admin/edit-student/${id}`); // Route to the edit student page
     },
+    goToAddSchool() {
+      Inertia.get('/admin/add-school'); // Route to the AddSchool.vue page
+    },
   },
 };
 </script>
-
 
 <style scoped>
 .admin-dashboard {
@@ -80,6 +82,22 @@ export default {
 .title {
   text-align: center;
   color: #333;
+}
+
+.add-school-button {
+  background-color: #f39c12; /* Orange color */
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 10px 15px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  display: block; /* Center it */
+  margin: 0 auto 20px; /* Center horizontally and add space below */
+}
+
+.add-school-button:hover {
+  background-color: #e67e22; /* Darker orange on hover */
 }
 
 .section {
