@@ -64,5 +64,11 @@ class UsersTableSeeder extends Seeder
             'role' => 'student',
             'teacher_id' => $teacher2->id, // Associate with Teacher Two
         ]);
+
+        $school1 = School::create(['name' => 'School A', 'address' => '123 Main St']);
+        $school2 = School::create(['name' => 'School B', 'address' => '456 Elm St']);
+
+        // Attach the schools to the user
+        $teacher1->schools()->attach([$school1->id, $school2->id]);
     }
 }
