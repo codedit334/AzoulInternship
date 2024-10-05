@@ -19,6 +19,10 @@
         <label for="name">School Name</label>
         <input type="text" id="name" v-model="form.name" required class="form-input">
       </div>
+      <div class="form-group">
+        <label for="adress">School Adress</label>
+        <input type="text" id="adress" v-model="form.adress" required class="form-input">
+      </div>
 
       <button type="submit" class="submit-button">Create School</button>
     </form>
@@ -36,6 +40,7 @@ export default {
     return {
       form: {
         name: '', // Only capture the school name in the form
+        adress: '', // Only capture the school name in the form
       },
     };
   },
