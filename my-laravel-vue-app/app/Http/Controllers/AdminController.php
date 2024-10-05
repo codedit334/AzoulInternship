@@ -245,7 +245,7 @@ public function storeSchool(Request $request)
 public function createSchool()
 {
     // Fetch all schools from the users table
-    $schools = User::where('role', 'school')->get(); // Adjust the role as needed
+    $schools = School::all(); // Retrieve all schools from the School model
 
     return Inertia::render('Admin/AddSchool', [
         'schools' => $schools, // Pass the schools to the view
