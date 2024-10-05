@@ -9,6 +9,8 @@ class School extends Model
 {
     use HasFactory;
 
+    protected $fillable = ['name', 'address'];  // Add 'name' and other attributes here
+
     public function users()
 {
     return $this->belongsToMany(User::class, 'school_user');

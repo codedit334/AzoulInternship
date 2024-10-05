@@ -238,7 +238,7 @@ public function storeSchool(Request $request)
     // Create the school
     School::create([
         'name' => $request->name,
-        'adress' => $request->adress,
+        'address' => $request->address,
     ]);
 
     // Redirect with a success message
