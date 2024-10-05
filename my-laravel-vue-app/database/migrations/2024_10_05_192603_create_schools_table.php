@@ -13,8 +13,9 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::table('users', function (Blueprint $table) {
-            $table->dropColumn(['school', 'school_id']); // Remove the columns
+        Schema::create('schools', function (Blueprint $table) {
+            $table->id();
+            $table->timestamps();
         });
     }
 
@@ -25,9 +26,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::table('users', function (Blueprint $table) {
-            $table->string('school')->nullable(); // Re-add the school column
-            $table->unsignedBigInteger('school_id')->nullable(); // Re-add the school_id column
-        });
+        Schema::dropIfExists('schools');
     }
 };

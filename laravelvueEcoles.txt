@@ -7,8 +7,12 @@ etud: lvl, ville, sexe, adress
 Admin edit! DONE
 change password DONE
 Admin add DONE
-profile pic
+profile pic DONE
 school?
+
+profile password chage optional
+sex teacher create
+admin edit
 
 
 
@@ -27,3 +31,4 @@ can student teacher and school use the users table column or they need their own
 
 Rewrite component based
 Error handeling
+
