@@ -13,11 +13,45 @@ class UserSeeder extends Seeder
      * @return void
      */
     public function run()
-    {
-        DB::table('users')->insert([
-            ['name' => 'Admin User', 'email' => 'admin@example.com', 'password' => bcrypt('password'), 'role' => 'admin'],
-            ['name' => 'Teacher User', 'email' => 'teacher@example.com', 'password' => bcrypt('password'), 'role' => 'teacher'],
-            ['name' => 'Student User', 'email' => 'student@example.com', 'password' => bcrypt('password'), 'role' => 'student'],
-        ]);
-    }
+{
+    // Create an admin
+    User::create([
+        'name' => 'Admin User',
+        'email' => 'admin@example.com',
+        'password' => bcrypt('password'),
+        'role' => 'admin',
+        'city' => 'City A',
+        'sex' => 'Male',
+        'address' => 'Address 123',
+    ]);
+
+    // Create a teacher
+    $teacherUser = User::create([
+        'name' => 'Teacher One',
+        'email' => 'teacher@example.com',
+        'password' => bcrypt('password'),
+        'role' => 'teacher',
+        'city' => 'City B',
+        'sex' => 'Female',
+        'address' => 'Address 456',
+    ]);
+
+    // Add subject to teacher
+    Teacher::create([
+        'user_id' => $teacherUser->id,
+        'subject' => 'Math',
+    ]);
+
+    // Create a student
+    $studentUser = User::create([
+        'name' => 'Student One',
+        'email' => 'student@example.com',
+        'password' => bcrypt('password'),
+        'role' => 'student',
+        'city' => 'City C',
+        'sex' => 'Male',
+        'address' => 'Address 789',
+        'level' => 3,
+    ]);
+}
 }

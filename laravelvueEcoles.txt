@@ -10,6 +10,8 @@ Admin add DONE
 profile pic DONE
 school?
 
+delete school
+display
 profile password chage optional
 sex teacher create
 admin edit
@@ -31,4 +33,75 @@ can student teacher and school use the users table column or they need their own
 
 Rewrite component based
 Error handeling
+
+
+DATABASE
+
+1. Users Table (Common Table)
+Since admins, teachers, and students share common attributes, create a users table for shared information.
+
+users table:
+
+id: Primary Key
+name: string
+email: string (unique)
+password: string
+city: string
+sex: string
+address: string
+level: integer (applicable to students, nullable for others)
+profile_picture: string (nullable)
+role: enum('admin', 'teacher', 'student')
+created_at and updated_at: timestamps
+2. Teachers Table (Additional Info for Teachers)
+Teachers have an additional subject field, so you can create a separate teachers table that references the users table.
+
+teachers table:
+
+id: Primary Key
+user_id: Foreign Key referencing users(id)
+subject: string (the subject taught by the teacher)
+3. Students Table
+If you need additional attributes specifically for students, you can add them in this table.
+
+students table:
+
+id: Primary Key
+user_id: Foreign Key referencing users(id)
+(additional fields if needed)
+4. Teacher-Student Pivot Table (Many-to-Many Relationship)
+To handle the many-to-many relationship between teachers and students, create a pivot table.
+
+student_teacher table:
+
+id: Primary Key
+teacher_id: Foreign Key referencing teachers(id)
+student_id: Foreign Key referencing students(id)
+created_at: timestamps
+5. Admins Table (If Additional Info is Needed)
+Admins can either share the same users table or have a separate table for any specific information.
+
+admins table (optional):
+
+id: Primary Key
+user_id: Foreign Key referencing users(id)
+(additional admin-specific fields if needed)
+6. Schools Table
+To store the school information:
+
+schools table:
+
+id: Primary Key
+name: string
+address: string
+7. User-School Pivot Table
+Since a user can be associated with many schools, create a pivot table for the relationship.
+
+school_user table:
+
+id: Primary Key
+school_id: Foreign Key referencing schools(id)
+user_id: Foreign Key referencing users(id)
+
+DATABASE END
 
