@@ -77,10 +77,6 @@ export default {
     teachers: Array,
     students: Array,
   },
-  created() {
-    console.log(this.teachers); // Log teachers in the console
-    console.log(this.students); // Log students in the console
-  },
   methods: {
     deleteUser(id) {
       if (confirm('Are you sure you want to delete this user?')) {

@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use App\Models\School;
+use App\Models\Teacher;
+use App\Models\Student;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Illuminate\Support\Facades\Hash;
@@ -78,17 +80,22 @@ class AdminController extends Controller
         $user->address = $request->address;
         $user->city = $request->city;
         $user->sex = $request->sex;
-        $user->lvl = $request->level; // Updated field name
+        $user->level = $request->level; // Updated field name
 
         // Set role to 'teacher' by default for this method
         $user->role = 'teacher';
+        
+        $user->save();
 
         // Set subject only if the role is 'teacher'
         if ($user->role === 'teacher') {
-            $user->subject = $request->subject;
+            // Create a new teacher record linked to this user
+            $teacher = new Teacher();
+            $teacher->user_id = $user->id; // Link the teacher to the user
+            $teacher->subject = $request->subject; // Assign the subject to the teacher
+            $teacher->save(); // Save the teacher record
         }
 
-        $user->save();
 
         // Redirect to a success page or return a success response
         return redirect()->route('admin.index')->with('success', 'Teacher created successfully!');
@@ -177,7 +184,7 @@ public function updateStudent(Request $request, $id)
     
 
     $student->teacher_id = $request->teacher_id;
-    $student->lvl = $request->level;
+    $student->level = $request->level;
     $student->sex = $request->sex;
     $student->address = $request->address;
     $student->city = $request->city;
@@ -230,7 +237,7 @@ public function updateTeacher(Request $request, $id)
     $teacher->city = $request->city;
     $teacher->sex = $request->sex;
     $teacher->subject = $request->subject;
-    $teacher->lvl = $request->level;
+    $teacher->level = $request->level;
 
     $teacher->save(); // Save the changes
 
