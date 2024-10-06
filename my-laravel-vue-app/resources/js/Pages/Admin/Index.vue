@@ -52,8 +52,11 @@
           <tr v-for="student in students" :key="student.id">
             <td>{{ student.name }}</td>
             <td>{{ student.email }}</td>
-            <td>{{ student.schools.name }}</td>
-            <td>
+<td>
+              <ul>
+                <li v-for="school in student.schools" :key="school.id">{{ school.name }}</li>
+              </ul>
+            </td>            <td>
               <button class="edit-button" @click="goToEditStudent(student.id)">Edit</button>
               <button class="delete-button" @click="deleteUser(student.id)">Delete</button>
             </td>
