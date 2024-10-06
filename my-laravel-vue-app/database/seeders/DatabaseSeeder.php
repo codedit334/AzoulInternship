@@ -53,6 +53,17 @@ class DatabaseSeeder extends Seeder
             'level' => null,
         ]);
 
+        $teacher3 = User::create([
+            'name' => 'Teacher Three',
+            'email' => 'teacher3@example.com',
+            'password' => Hash::make('password'),
+            'role' => 'teacher',
+            'city' => 'City 2',
+            'sex' => 'Male',
+            'address' => '456 Teacher St',
+            'level' => null,
+        ]);
+
         // Insert into the teachers table with the subject field
         Teacher::create([
             'user_id' => $teacher1->id,
@@ -61,6 +72,11 @@ class DatabaseSeeder extends Seeder
 
         Teacher::create([
             'user_id' => $teacher2->id,
+            'subject' => 'Science', // Teacher's subject
+        ]);
+
+        Teacher::create([
+            'user_id' => $teacher3->id,
             'subject' => 'Science', // Teacher's subject
         ]);
 
@@ -108,26 +124,38 @@ class DatabaseSeeder extends Seeder
             'address' => '789 Student St',
             'level' => 2,
         ]);
-
-        Student::create([
-            'user_id' => $student1->id,
+        
+        $student5 = User::create([
+            'name' => 'Student Five',
+            'email' => 'student5@example.com',
+            'password' => Hash::make('password'),
+            'role' => 'student',
+            'city' => 'Student City 4',
+            'sex' => 'Female',
+            'address' => '789 Student St',
+            'level' => 2,
         ]);
         
-        Student::create([
-            'user_id' => $student2->id,
-        ]);
+        // Student::create([
+        //     'user_id' => $student1->id,
+        // ]);
+        
+        // Student::create([
+        //     'user_id' => $student2->id,
+        // ]);
 
-        Student::create([
-            'user_id' => $student3->id,
-        ]);
+        // Student::create([
+        //     'user_id' => $student3->id,
+        // ]);
 
-        Student::create([
-            'user_id' => $student4->id,
-        ]);
+        // Student::create([
+        //     'user_id' => $student4->id,
+        // ]);
 
         // Assign 2 students to each teacher (many-to-many relationship)
         $teacher1->students()->attach([$student1->id, $student2->id]);
         $teacher2->students()->attach([$student3->id, $student4->id]);
+        $student5->teachers()->attach([$teacher3->id, $teacher2->id]);
 
         // Create 4 Schools
         $school1 = School::create([

@@ -5,31 +5,61 @@
     <!-- Add School Button -->
     <button class="add-school-button" @click="goToAddSchool">Add School</button>
 
+    <!-- Teachers Section -->
     <div class="section">
       <h2 class="section-title">Teachers</h2>
-      <ul class="user-list">
-        <li v-for="teacher in teachers" :key="teacher.id" class="user-item">
-          <span>{{ teacher.name }} ({{ teacher.email }})</span>
-          <div>
-            <button class="edit-button" @click="goToEditTeacher(teacher.id)">Edit</button>
-            <button class="delete-button" @click="deleteUser(teacher.id)">Delete</button>
-          </div>
-        </li>
-      </ul>
+      <table class="user-table">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Schools</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="teacher in teachers" :key="teacher.id">
+            <td>{{ teacher.name }}</td>
+            <td>{{ teacher.email }}</td>
+            <td>
+              <ul>
+                <li v-for="school in teacher.schools" :key="school.id">{{ school.name }}</li>
+              </ul>
+            </td>
+            <td>
+              <button class="edit-button" @click="goToEditTeacher(teacher.id)">Edit</button>
+              <button class="delete-button" @click="deleteUser(teacher.id)">Delete</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
       <button class="add-button" @click="goToCreateTeacher">Add Teacher</button>
     </div>
 
+    <!-- Students Section -->
     <div class="section">
       <h2 class="section-title">Students</h2>
-      <ul class="user-list">
-        <li v-for="student in students" :key="student.id" class="user-item">
-          <span>{{ student.name }} ({{ student.email }})</span>
-          <div>
-            <button class="edit-button" @click="goToEditStudent(student.id)">Edit</button>
-            <button class="delete-button" @click="deleteUser(student.id)">Delete</button>
-          </div>
-        </li>
-      </ul>
+      <table class="user-table">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Email</th>
+            <th>School</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="student in students" :key="student.id">
+            <td>{{ student.name }}</td>
+            <td>{{ student.email }}</td>
+            <td>{{ student.schools.name }}</td>
+            <td>
+              <button class="edit-button" @click="goToEditStudent(student.id)">Edit</button>
+              <button class="delete-button" @click="deleteUser(student.id)">Delete</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
       <button class="add-button" @click="goToCreateStudent">Add Student</button>
     </div>
   </div>
@@ -44,6 +74,10 @@ export default {
     teachers: Array,
     students: Array,
   },
+  created() {
+    console.log(this.teachers); // Log teachers in the console
+    console.log(this.students); // Log students in the console
+  },
   methods: {
     deleteUser(id) {
       if (confirm('Are you sure you want to delete this user?')) {
@@ -57,13 +91,13 @@ export default {
       Inertia.get('/admin/create-student');
     },
     goToEditTeacher(id) {
-      Inertia.get(`/admin/edit-teacher/${id}`); // Route to the edit teacher page
+      Inertia.get(`/admin/edit-teacher/${id}`);
     },
     goToEditStudent(id) {
-      Inertia.get(`/admin/edit-student/${id}`); // Route to the edit student page
+      Inertia.get(`/admin/edit-student/${id}`);
     },
     goToAddSchool() {
-      Inertia.get('/admin/add-school'); // Route to the AddSchool.vue page
+      Inertia.get('/admin/add-school');
     },
   },
 };
@@ -71,7 +105,7 @@ export default {
 
 <style scoped>
 .admin-dashboard {
-  max-width: 800px;
+  max-width: 1000px;
   margin: 0 auto;
   padding: 20px;
   background-color: #f9f9f9;
@@ -85,19 +119,19 @@ export default {
 }
 
 .add-school-button {
-  background-color: #f39c12; /* Orange color */
+  background-color: #f39c12;
   color: white;
   border: none;
   border-radius: 4px;
   padding: 10px 15px;
   cursor: pointer;
   transition: background-color 0.3s;
-  display: block; /* Center it */
-  margin: 0 auto 20px; /* Center horizontally and add space below */
+  display: block;
+  margin: 0 auto 20px;
 }
 
 .add-school-button:hover {
-  background-color: #e67e22; /* Darker orange on hover */
+  background-color: #e67e22;
 }
 
 .section {
@@ -110,20 +144,21 @@ export default {
   color: #555;
 }
 
-.user-list {
-  list-style: none;
-  padding: 0;
+.user-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
 }
 
-.user-item {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+.user-table th,
+.user-table td {
   padding: 10px;
-  background-color: #fff;
   border: 1px solid #ddd;
-  border-radius: 4px;
-  margin-bottom: 8px;
+}
+
+.user-table th {
+  background-color: #f0f0f0;
+  text-align: left;
 }
 
 .delete-button {
@@ -159,17 +194,17 @@ export default {
 }
 
 .edit-button {
-  background-color: #3498db; /* Blue color */
+  background-color: #3498db;
   color: white;
   border: none;
   border-radius: 4px;
   padding: 5px 10px;
   cursor: pointer;
   transition: background-color 0.3s;
-  margin-right: 5px; /* Add some space between buttons */
+  margin-right: 5px;
 }
 
 .edit-button:hover {
-  background-color: #2980b9; /* Darker blue on hover */
+  background-color: #2980b9;
 }
 </style>
