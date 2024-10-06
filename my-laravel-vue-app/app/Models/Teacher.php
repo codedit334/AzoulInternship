@@ -18,11 +18,11 @@ class Teacher extends Model
 
     public function students()
     {
-        return $this->belongsToMany(Student::class);
+        return $this->belongsToMany(Student::class, 'student_teacher');
     }
 
     public function schools()
     {
-        return $this->belongsToMany(School::class);
+        return $this->belongsToMany(School::class, 'school_user');
     }
 }

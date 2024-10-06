@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use App\Models\User;
 use App\Models\School;
 use App\Models\Teacher;
+use App\Models\Student;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
 
@@ -108,6 +109,22 @@ class DatabaseSeeder extends Seeder
             'level' => 2,
         ]);
 
+        Student::create([
+            'user_id' => $student1->id,
+        ]);
+        
+        Student::create([
+            'user_id' => $student2->id,
+        ]);
+
+        Student::create([
+            'user_id' => $student3->id,
+        ]);
+
+        Student::create([
+            'user_id' => $student4->id,
+        ]);
+
         // Assign 2 students to each teacher (many-to-many relationship)
         $teacher1->students()->attach([$student1->id, $student2->id]);
         $teacher2->students()->attach([$student3->id, $student4->id]);
@@ -137,7 +154,7 @@ class DatabaseSeeder extends Seeder
         $teacher1->schools()->attach([$school1->id, $school2->id]);
         $teacher2->schools()->attach([$school3->id, $school4->id]);
 
-        // Assign 1 school to all students (many-to-many relationship)
+        // // Assign 1 school to all students (many-to-many relationship)
         $student1->schools()->attach($school1->id);
         $student2->schools()->attach($school1->id);
         $student3->schools()->attach($school1->id);
