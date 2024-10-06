@@ -232,7 +232,7 @@ public function storeSchool(Request $request)
     // Validate the school name
     $request->validate([
         'name' => 'required|string|max:255',
-        'adress' => 'required|string|max:255',
+        'address' => 'required|string|max:255',
     ]);
 
     // Create the school
@@ -242,7 +242,7 @@ public function storeSchool(Request $request)
     ]);
 
     // Redirect with a success message
-    return redirect()->route('admin.schools')->with('success', 'School created successfully!');
+    return redirect()->route('admin.create-school')->with('success', 'School created successfully!');
 }
 
 public function createSchool()
