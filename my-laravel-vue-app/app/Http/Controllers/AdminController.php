@@ -105,8 +105,11 @@ class AdminController extends Controller
     public function createStudent()
     {
         $teachers = User::where('role', 'teacher')->get(); // Fetch all teachers
+        $schools = School::all(); // Fetch all schools
+        
         return Inertia::render('Admin/CreateStudent', [
             'teachers' => $teachers, // Pass the teachers to the view
+            'schools' => $schools, // Pass the teachers to the view
         ]);
     }
 
@@ -118,11 +121,12 @@ class AdminController extends Controller
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:8|confirmed',
-            'teacher_id' => 'required|exists:users,id', // Ensure the teacher exists
             'level' => 'required|integer|min:1|max:6', // Assuming levels are from 1 to 6
             'sex' => 'required|string|max:10', // 'Male', 'Female', or other options
             'address' => 'required|string|max:255',
             'city' => 'required|string|max:255',
+            'teacher_ids' => 'required|array',  
+            'school_ids' => 'required|integer',   // Expecting an array of school IDs
         ]);
 
         // Create a new student
@@ -130,13 +134,23 @@ class AdminController extends Controller
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
-            'teacher_id' => $request->teacher_id,
+            // 'teacher_id' => $request->teacher_id,
             'level' => $request->level,
             'sex' => $request->sex,
             'address' => $request->address,
             'city' => $request->city,
             'role' => 'student',
         ]);
+
+        // Attach the student to multiple teachers (many-to-many relationship)
+    if ($request->has('teacher_ids')) {
+        $student->teachers()->attach($request->teacher_ids); // Attach selected teachers
+    }
+
+    // Attach the student to multiple schools (many-to-many relationship)
+    if ($request->has('school_ids')) {
+        $student->schools()->attach($request->school_ids); // Attach selected schools
+    }
 
         // Fire the Registered event to send email verification
         event(new Registered($student));

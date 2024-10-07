@@ -38,8 +38,8 @@
         </div>
 
         <div class="form-group">
-            <label for="lvl">Level</label>
-            <input type="number" id="lvl" name="lvl" value="{{ old('lvl') }}" min="1" max="6" required>
+            <label for="level">Level</label>
+            <input type="number" id="level" name="level" value="{{ old('level') }}" min="1" max="6" required>
         </div>
 
         <div class="form-group">

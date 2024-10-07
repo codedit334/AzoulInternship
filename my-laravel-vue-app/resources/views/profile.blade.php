@@ -67,8 +67,8 @@
         </div>
 
         <div class="form-group">
-            <label for="lvl">Level</label>
-            <input type="number" id="lvl" name="lvl" value="{{ old('lvl', Auth::user()->lvl) }}" min="1" max="6"
+            <label for="level">Level</label>
+            <input type="number" id="level" name="level" value="{{ old('level', Auth::user()->level) }}" min="1" max="6"
                 required>
         </div>
 

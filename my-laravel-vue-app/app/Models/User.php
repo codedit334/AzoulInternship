@@ -23,7 +23,7 @@ class User extends Authenticatable
         'password',
         'role',
         'teacher_id',
-        'lvl', 
+        'level', 
         'city', 
         'sex', 
         'subject', 

@@ -2,31 +2,37 @@
   <div class="create-student-form">
     <h1 class="form-title">Create Student</h1>
     <form @submit.prevent="submit" class="form">
+      <!-- Name -->
       <div class="form-group">
         <label for="name">Name</label>
         <input type="text" id="name" v-model="form.name" required class="form-input">
       </div>
 
+      <!-- Email -->
       <div class="form-group">
         <label for="email">Email</label>
         <input type="email" id="email" v-model="form.email" required class="form-input">
       </div>
 
+      <!-- Password -->
       <div class="form-group">
         <label for="password">Password</label>
         <input type="password" id="password" v-model="form.password" required class="form-input">
       </div>
 
+      <!-- Confirm Password -->
       <div class="form-group">
         <label for="password_confirmation">Confirm Password</label>
         <input type="password" id="password_confirmation" v-model="form.password_confirmation" required class="form-input">
       </div>
 
+      <!-- Level -->
       <div class="form-group">
         <label for="level">Level</label>
         <input type="number" id="level" v-model="form.level" min="1" max="6" required class="form-input">
       </div>
 
+      <!-- Sex -->
       <div class="form-group">
         <label for="sex">Sex</label>
         <select id="sex" v-model="form.sex" required class="form-select">
@@ -36,26 +42,41 @@
         </select>
       </div>
 
+      <!-- Address -->
       <div class="form-group">
         <label for="address">Address</label>
         <input type="text" id="address" v-model="form.address" required class="form-input">
       </div>
 
+      <!-- City -->
       <div class="form-group">
         <label for="city">City</label>
         <input type="text" id="city" v-model="form.city" required class="form-input">
       </div>
 
+      <!-- Assign Teachers (Multiple) -->
       <div class="form-group">
-        <label for="teacher_id">Assign Teacher</label>
-        <select id="teacher_id" v-model="form.teacher_id" required class="form-select">
-          <option value="" disabled>Select a teacher</option>
+        <label for="teacher_ids">Assign Teachers</label>
+        <select id="teacher_ids" v-model="form.teacher_ids" multiple class="form-select">
+          <option value="" disabled>Select Teachers</option>
           <option v-for="teacher in teachers" :key="teacher.id" :value="teacher.id">
             {{ teacher.name }}
           </option>
         </select>
       </div>
 
+      <!-- Assign Schools (Multiple) -->
+      <div class="form-group">
+        <label for="school_ids">Assign Schools</label>
+        <select id="school_ids" v-model="form.school_ids" class="form-select">
+          <option value="" disabled>Select Schools</option>
+          <option v-for="school in schools" :key="school.id" :value="school.id">
+            {{ school.name }}
+          </option>
+        </select>
+      </div>
+
+      <!-- Submit Button -->
       <button type="submit" class="submit-button">Create Student</button>
     </form>
   </div>
@@ -67,6 +88,11 @@ import { Inertia } from '@inertiajs/inertia';
 export default {
   props: {
     teachers: Array, // Pass the teachers data from the backend
+    schools: Array,  // Pass the schools data from the backend
+  },
+  created() {
+    console.log(this.teachers);
+    console.log(this.schools);
   },
   data() {
     return {
@@ -79,7 +105,8 @@ export default {
         sex: '',
         address: '',
         city: '',
-        teacher_id: '',
+        teacher_ids: [], // For multiple teachers
+        school_ids: [],  // For multiple schools
       },
     };
   },
@@ -123,7 +150,7 @@ export default {
 }
 
 .form-input, .form-select {
-  width: 100%; /* Make input fields take full width of the container */
+  width: 100%;
   padding: 10px;
   border: 1px solid #ddd;
   border-radius: 4px;

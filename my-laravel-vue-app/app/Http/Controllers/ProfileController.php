@@ -32,7 +32,7 @@ class ProfileController extends Controller
         $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|email|max:255',
-            'lvl' => 'required|integer',
+            'level' => 'required|integer',
             'city' => 'required|string|max:255',
             'sex' => 'required|string|max:255',
             'address' => 'required|string|max:255',
@@ -71,7 +71,7 @@ class ProfileController extends Controller
     // Update user details
     $user->name = $request->name;
     $user->email = $request->email;
-    $user->lvl = $request->lvl;
+    $user->level = $request->level;
     $user->city = $request->city;
     $user->sex = $request->sex;
     $user->address = $request->address;
