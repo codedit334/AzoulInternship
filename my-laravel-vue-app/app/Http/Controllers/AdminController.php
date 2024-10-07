@@ -46,10 +46,25 @@ class AdminController extends Controller
         return redirect()->back()->with('message', 'User deleted successfully!');
     }
 
+    public function destroySchool($id)
+    {
+        $school = School::findOrFail($id);
+        $school->delete();
+
+        return redirect()->back()->with('message', 'School deleted successfully!');
+    }
+
     // Display the form to create a teacher
     public function createTeacher()
     {
-        return Inertia::render('Admin/CreateTeacher');
+        $students = User::where('role', 'student')->get(); // Fetch all students
+        $schools = School::all(); // Fetch all schools
+        
+        return Inertia::render('Admin/CreateTeacher', [
+            'students' => $students, // Pass the students to the view
+            'schools' => $schools, // Pass the schools to the view
+        ]);
+        // return Inertia::render('Admin/CreateTeacher');
     }
 
     // Store a new teacher
@@ -66,6 +81,8 @@ class AdminController extends Controller
             'subject' => 'nullable|string|max:255', // Subject is nullable but required if teacher
             'level' => 'required|integer|min:1|max:6',
         ]);
+
+
 
         // Return validation errors if any
         if ($validator->fails()) {
@@ -84,8 +101,18 @@ class AdminController extends Controller
 
         // Set role to 'teacher' by default for this method
         $user->role = 'teacher';
-        
+
         $user->save();
+
+        // Attach the student to multiple teachers (many-to-many relationship)
+        if ($request->has('student_ids')) {
+            $user->students()->attach($request->student_ids); // Attach selected students
+        }
+
+    // Attach the student to multiple schools (many-to-many relationship)
+    if ($request->has('school_ids')) {
+        $user->schools()->attach($request->school_ids); // Attach selected schools
+    }
 
         // Set subject only if the role is 'teacher'
         if ($user->role === 'teacher') {

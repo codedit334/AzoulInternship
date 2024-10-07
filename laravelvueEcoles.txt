@@ -1,20 +1,27 @@
 etablissement: nom, adress.
 profile customusation: etablisment id, , profile pic
-prof: level, ville, sexe, matiere, adress
-etud: level, ville, sexe, adress
+prof: lvl, ville, sexe, matiere, adress
+etud: lvl, ville, sexe, adress
 
 
 Admin edit! DONE
 change password DONE
 Admin add DONE
 profile pic DONE
-school?
+school DONE
 
-delete school
+delete school DONE
+
 display
 profile password chage optional
 sex teacher create
-admin edit
+admin edit: profile complet de chaque user
+
+
+timetable teacher, student:optional
+Complains
+sidebar: complains: type..notes..student.name..whomadeit..notifications, students, teachers, 
+
 
 
 

@@ -59,6 +59,28 @@
         <input type="number" id="level" v-model="form.level" min="1" max="6" required class="form-input">
       </div>
 
+      <!-- Assign Students (Multiple) -->
+      <div class="form-group">
+        <label for="student_ids">Assign Students</label>
+        <select id="student_ids" v-model="form.student_ids" multiple class="form-select">
+          <option value="" disabled>Select Students</option>
+          <option v-for="student in students" :key="student.id" :value="student.id">
+            {{ student.name }}
+          </option>
+        </select>
+      </div>
+
+      <!-- Assign Schools (Multiple) -->
+      <div class="form-group">
+        <label for="school_ids">Assign Schools</label>
+        <select id="school_ids" v-model="form.school_ids" multiple class="form-select">
+          <option value="" disabled>Select Schools</option>
+          <option v-for="school in schools" :key="school.id" :value="school.id">
+            {{ school.name }}
+          </option>
+        </select>
+      </div>
+
       <button type="submit" class="submit-button">Create Teacher</button>
     </form>
   </div>
@@ -68,6 +90,10 @@
 import { Inertia } from '@inertiajs/inertia';
 
 export default {
+  props: {
+    students: Array,  // Students data from backend
+    schools: Array,   // Schools data from backend
+  },
   data() {
     return {
       form: {
@@ -77,16 +103,17 @@ export default {
         password_confirmation: '',
         address: '',
         city: '',
-        sex: 'male', // Default value for sex
-        subject: '',  // This field will only be used if the role is teacher
-        level: 1,     // Default level value
+        sex: 'male',    // Default value for sex
+        subject: '',    // Subject field for teachers
+        level: 1,       // Default level value
+        student_ids: [], // For assigning multiple students
+        school_ids: [],  // For assigning multiple schools
       },
     };
   },
   computed: {
     isTeacher() {
-      // Assuming you determine the user's role from somewhere (e.g., in the form or via props)
-      return true; // Replace this with actual logic to check if the role is teacher
+      return true;  // Replace with actual role-check logic if needed
     },
   },
   methods: {
@@ -128,15 +155,17 @@ export default {
   color: #555;
 }
 
-.form-input {
-  width: 100%; /* Make input fields take full width of the container */
+.form-input,
+.form-select {
+  width: 100%;
   padding: 10px;
   border: 1px solid #ddd;
   border-radius: 4px;
   font-size: 14px;
 }
 
-.form-input:focus {
+.form-input:focus,
+.form-select:focus {
   border-color: #2ecc71;
   outline: none;
 }

@@ -8,6 +8,7 @@
       <ul>
         <li v-for="school in schools" :key="school.id" class="school-item">
           {{ school.name }}
+          <button @click="deleteSchool(school.id)" class="delete-button">Delete</button>
         </li>
       </ul>
     </div>
@@ -21,7 +22,7 @@
       </div>
       <div class="form-group">
         <label for="address">School Address</label>
-        <input type="text" id="adxress" v-model="form.address" required class="form-input">
+        <input type="text" id="address" v-model="form.address" required class="form-input">
       </div>
 
       <button type="submit" class="submit-button">Create School</button>
@@ -40,14 +41,19 @@ export default {
     return {
       form: {
         name: '', // Only capture the school name in the form
-        address: '', // Only capture the school name in the form
+        address: '', // Only capture the school address in the form
       },
     };
   },
   methods: {
     submit() {
-    console.log(this.form);
+      console.log(this.form);
       Inertia.post('/admin/store-school', this.form); // Submit the new school name to the server
+    },
+    deleteSchool(schoolId) {
+      if (confirm('Are you sure you want to delete this school?')) {
+        Inertia.delete(`/admin/schools/${schoolId}`); // Send a DELETE request to delete the school
+      }
     },
   },
 };
@@ -79,6 +85,23 @@ export default {
   border-radius: 4px;
   margin-bottom: 10px;
   background-color: #fff;
+  display: flex;
+  justify-content: space-between; /* Align the items with space between */
+  align-items: center; /* Center vertically */
+}
+
+.delete-button {
+  background-color: #e74c3c; /* Red color for delete button */
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 5px 10px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.delete-button:hover {
+  background-color: #c0392b; /* Darker red on hover */
 }
 
 .form {

@@ -68,6 +68,7 @@ Route::middleware(['auth'])->group(function () {
         // Admin routes
         Route::get('/admin', [AdminController::class, 'index'])->name('admin.index');
         Route::delete('/admin/users/{id}', [AdminController::class, 'destroy'])->name('admin.destroy_user');
+        Route::delete('/admin/schools/{id}', [AdminController::class, 'destroySchool'])->name('admin.destroy_school');
         
         // Routes for creating teachers and students
         Route::get('/admin/create-teacher', [AdminController::class, 'createTeacher'])->name('admin.create_teacher');
