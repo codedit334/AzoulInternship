@@ -3,8 +3,7 @@
         <header>
             <h1>My Dashboard</h1>
             <nav>
-                <router-link to="/students">Students</router-link>
-                <router-link to="/teachers">Teachers</router-link>
+                nav
             </nav>
         </header>
         <router-view></router-view>

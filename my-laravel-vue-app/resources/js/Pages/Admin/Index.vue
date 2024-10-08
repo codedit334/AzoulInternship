@@ -1,5 +1,5 @@
 <template>
-  <SidebarMenu :menu="menu" :theme="'white-theme'" />
+  <SidebarMenu :menu="menu" :collapsed="sidebarOpen" :theme="'white-theme'" />
   
   <div class="admin-dashboard">
     <h1 class="title">Admin Dashboard</h1>
@@ -103,10 +103,15 @@ export default {
     },
   },
 
- 
+   mounted() {
+      this.sidebarOpen = true; // Ensure it’s closed on mount
+      console.log(this.sidebarOpen)
+   },
+
+
   data() {
       return {
-      // Sidebar theme (available themes: 'white-theme')
+        sidebarOpen: true,
         theme: {
           type: String,
           default: 'white-theme'
