@@ -4,9 +4,10 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Laravel Vue App</title>
+    <title>Teacher Student Management App</title>
     @vite(['resources/js/app.js'])
     <!-- Vite directive to load the JS -->
+
 </head>
 
 <body>

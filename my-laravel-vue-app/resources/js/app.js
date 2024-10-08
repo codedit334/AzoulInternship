@@ -6,8 +6,18 @@
 
 import './bootstrap';
 import { createApp, h } from 'vue'
+
 import { createInertiaApp } from '@inertiajs/vue3'; // Use @inertiajs/inertia-vue for Vue 2
 import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers';
+
+import 'font-awesome/css/font-awesome.css';
+
+
+
+import VueSidebarMenu from 'vue-sidebar-menu'
+import 'vue-sidebar-menu/dist/vue-sidebar-menu.css'
+
+
 
 /**
  * Next, we will create a fresh Vue application instance. You may then begin
@@ -17,10 +27,7 @@ import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers';
 
 
 
-const app = createApp({});
-
-import ExampleComponent from './components/ExampleComponent.vue';
-app.component('example-component', ExampleComponent);
+// const app = createApp({});
 
 /**
  * The following block of code may be used to automatically register your
@@ -44,9 +51,11 @@ createInertiaApp({
     resolve: (name) => resolvePageComponent(`./Pages/${name}.vue`, import.meta.glob('./Pages/**/*.vue')),
     setup({ el, App, props, plugin }) {
         createApp({ render: () => h(App, props) })
+            .use(VueSidebarMenu)
             .use(plugin)
             .mount(el);
     },
 });
 
-app.mount('#app');
+
+// app.mount('#app');

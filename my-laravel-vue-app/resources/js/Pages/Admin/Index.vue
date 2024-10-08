@@ -1,4 +1,6 @@
 <template>
+  <SidebarMenu :menu="menu" :theme="'white-theme'" />
+  
   <div class="admin-dashboard">
     <h1 class="title">Admin Dashboard</h1>
 
@@ -77,6 +79,7 @@ export default {
     teachers: Array,
     students: Array,
   },
+
   methods: {
     deleteUser(id) {
       if (confirm('Are you sure you want to delete this user?')) {
@@ -99,11 +102,58 @@ export default {
       Inertia.get('/admin/add-school');
     },
   },
+
+ 
+  data() {
+      return {
+      // Sidebar theme (available themes: 'white-theme')
+        theme: {
+          type: String,
+          default: 'white-theme'
+        },
+        menu: [
+          {
+            header: 'Main Navigation',
+            hiddenOnCollapse: true
+          },
+          {
+            href: '/',
+            title: 'Dashboard',
+            icon: 'fa fa-home'
+          },
+          {
+            href: '/',
+            title: 'Teachers',
+            icon: 'fa fa-black-tie'
+          },
+           {
+            href: '/',
+            title: 'Students',
+            icon: 'fa fa-graduation-cap'
+          },
+          {
+            title: 'Complains',
+            icon: "fa fa-exclamation-triangle",
+            child: [
+              {
+                href: '/charts/sublink',
+                title: 'Sub Link'
+              }
+            ]
+          }
+        ]
+      }
+    },
 };
+
+
+
 </script>
 
 <style scoped>
 .admin-dashboard {
+  position: relative;
+  left: 10px;
   max-width: 1000px;
   margin: 0 auto;
   padding: 20px;

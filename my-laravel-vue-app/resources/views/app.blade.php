@@ -21,6 +21,15 @@
         margin: 0;
         padding: 0;
         box-sizing: border-box;
+        position: relative;
+        left: 60px;
+        width: calc(100% - 60px)
+    }
+
+    .vsm--icon {
+        display: none;
+        color: lightgrey !important;
+        background-color: #4b5563 !important;
     }
 
     .navbar {
