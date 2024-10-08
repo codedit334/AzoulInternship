@@ -127,8 +127,11 @@ body {
 }
 
 .img-1 {
-    --start-color: #84a87c;
-    --stop-color: #1b6571;
-    --bg-image: url("https://picsum.photos/2016/1642?image=40");
+    /* --start-color: #7c87a8;
+    --stop-color: #ff0028; */
+    --start-color: #ff0028;
+    --stop-color: #7c87a8;
+    --bg-image: url("https://picsum.photos/2016/1642?image=30");
+    /* --bg-image: url("https://picsum.photos/2016/1642?image=40"); */
 }
 </style>
