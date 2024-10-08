@@ -94,7 +94,7 @@
     </style>
 </head>
 
-<body>
+<body class="fixed-background img-1">
     <div id="app">
         <main class="py-4">
             @yield('content')
@@ -108,5 +108,27 @@
 body {
     padding: 0;
     margin: 0 !important;
+}
+
+/* BG image */
+.fixed-background {
+    height: 120vh;
+    --bg-image: url("https://picsum.photos/2016/1642?image=10");
+    --start-color: #09f;
+    --stop-color: #90f;
+    background-position: center;
+    background-size: cover;
+    background-image: linear-gradient(to bottom,
+            var(--start-color),
+            var(--stop-color)),
+        var(--bg-image);
+    background-attachment: fixed;
+    background-blend-mode: overlay, exclusion;
+}
+
+.img-1 {
+    --start-color: #84a87c;
+    --stop-color: #1b6571;
+    --bg-image: url("https://picsum.photos/2016/1642?image=40");
 }
 </style>

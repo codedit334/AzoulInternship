@@ -8,7 +8,7 @@
     @vite(['resources/js/app.js'])
 </head>
 
-<body>
+<body class="fixed-background img-1">
     @extends('layouts.app')
 
     <div id="app"></div> <!-- Vue will mount here -->
