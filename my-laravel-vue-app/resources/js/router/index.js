@@ -5,15 +5,15 @@ import Login from '../components/Login.vue';
 
 const routes = [
     {
-        path: '/login',
-        name: 'Login',
-        component: Login,
+        path: '/',
+        name: 'Home',
+        // component: Login,
     },
     {
-        path: '/students',
-        name: 'StudentList',
-        component: StudentList,
-        meta: { requiresAuth: true }, // Protect this route
+        path: '/admin',
+        name: 'Admin',
+        // component: StudentList,
+        // meta: { requiresAuth: true }, // Protect this route
     },
     {
         path: '/teachers',
