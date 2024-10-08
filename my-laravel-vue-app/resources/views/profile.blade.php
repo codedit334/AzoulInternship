@@ -147,7 +147,6 @@
 .password-title {
     margin-top: 20px;
     color: #3498db;
-    /* Change this to your preferred color */
 }
 
 .form-group {
@@ -183,7 +182,6 @@
     background-color: #2980b9;
 }
 
-/* Styling for profile picture */
 .profile-picture {
     text-align: center;
     margin-bottom: 20px;

@@ -18,8 +18,6 @@ class AdminController extends Controller
     public function index()
     {
         // Fetch all teachers and students
-        // $teachers = User::where('role', 'teacher')->get();
-        
         $teachers = User::where('role', 'teacher')
                 ->with('schools')  // Load schools relationship
                 ->get();
@@ -29,7 +27,6 @@ class AdminController extends Controller
         $students = User::where('role', 'student')
                 ->with('schools')  // Assuming you have a `school()` relationship defined
                 ->get();
-        // $students = User::where('role', 'student')->get();
 
         // Return Inertia response with the data
         return Inertia::render('Admin/Index', [
@@ -64,7 +61,6 @@ class AdminController extends Controller
             'students' => $students, // Pass the students to the view
             'schools' => $schools, // Pass the schools to the view
         ]);
-        // return Inertia::render('Admin/CreateTeacher');
     }
 
     // Store a new teacher

@@ -27,7 +27,6 @@ import 'vue-sidebar-menu/dist/vue-sidebar-menu.css'
 
 
 
-// const app = createApp({});
 
 /**
  * The following block of code may be used to automatically register your
@@ -58,4 +57,3 @@ createInertiaApp({
 });
 
 
-// app.mount('#app');

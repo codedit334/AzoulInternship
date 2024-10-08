@@ -6,8 +6,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Teacher Student Management App</title>
     @vite(['resources/js/app.js'])
-    <!-- Vite directive to load the JS -->
-
 </head>
 
 <body>

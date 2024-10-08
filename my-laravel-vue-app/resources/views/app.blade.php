@@ -34,7 +34,6 @@
 
     .navbar {
         background-color: #3498db;
-        /* padding: 15px 0 15px 15px; */
         padding: 15px;
         justify-content: flex-end;
         align-items: center;

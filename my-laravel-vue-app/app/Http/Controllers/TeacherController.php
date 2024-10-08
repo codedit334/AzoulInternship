@@ -60,9 +60,6 @@ class TeacherController extends Controller
         // Handle other errors
         return response()->json(['error' => 'An error occurred: ' . $e->getMessage()], 500);
     }
- 
-         // Redirect back to the student's list with a success message
-        //  return redirect()->route('teachers.my_students')->with('success', 'Student created successfully!');
      }
      
      // Assign an unassigned student to the current teacher
